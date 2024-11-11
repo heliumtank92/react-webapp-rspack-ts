@@ -9,7 +9,7 @@ import { pluginSass } from '@rsbuild/plugin-sass'
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin'
 import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser'
 
-export default defineConfig(({ env, command, envMode }): RsbuildConfig => {
+export default defineConfig(({ envMode }): RsbuildConfig => {
   const { publicVars, parsed } = loadEnv({
     prefixes: ['APP_', 'AS_', 'npm_package_'],
     mode: envMode || process.env.NODE_ENV || 'development'
@@ -56,7 +56,17 @@ export default defineConfig(({ env, command, envMode }): RsbuildConfig => {
     },
     html: {
       template: './public/index.html',
-      templateParameters: parsed
+      templateParameters: parsed,
+      tags: [
+        tags => {
+          tags.forEach(tag => {
+            if (tag.attrs?.rel === 'stylesheet') {
+              tag.attrs.media = 'print'
+              tag.attrs.onload = "this.media='all'"
+            }
+          })
+        }
+      ]
     },
     performance: {
       bundleAnalyze:
