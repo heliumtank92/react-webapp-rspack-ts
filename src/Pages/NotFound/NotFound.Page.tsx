@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react'
-import { DsTypography } from '@am92/react-design-system'
+import React from 'react'
+import { Typography } from '@mui/material'
 
-export default class NotFoundPage extends PureComponent {
-  render() {
-    return <DsTypography variant='headingBoldExtraLarge'>Page 404</DsTypography>
-  }
+const NotFoundPage: React.FC = () => {
+  return <Typography variant="h2">Not Found</Typography>
 }
+
+export default NotFoundPage

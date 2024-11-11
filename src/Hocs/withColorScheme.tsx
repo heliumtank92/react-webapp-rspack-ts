@@ -1,5 +1,5 @@
 import React from 'react'
-import { SupportedColorScheme, useColorScheme } from '@am92/react-design-system'
+import { SupportedColorScheme, useColorScheme } from '@mui/material'
 import { Subtract } from 'utility-types'
 
 /**

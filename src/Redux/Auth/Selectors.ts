@@ -4,22 +4,19 @@ import { TAppStore } from '~/src/Configurations/AppStore'
 
 export const SLICE_NAME = 'auth'
 
-// const select = (state: TAppStore) => state[SLICE_NAME]
-const isLoggedInSelect = (state: TAppStore) => state[SLICE_NAME].isLoggedIn
-const accessTokenSelect = (state: TAppStore) => state[SLICE_NAME].accessToken
-const refreshTokenSelect = (state: TAppStore) => state[SLICE_NAME].refreshToken
+const select = (state: TAppStore) => state[SLICE_NAME]
 
 export const getIsLoggedInSelector = createSelector(
-  isLoggedInSelect,
-  isLoggedIn => isLoggedIn
+  select,
+  reducer => reducer.isLoggedIn
 )
 
 export const getAccessTokenSelector = createSelector(
-  accessTokenSelect,
-  accessToken => accessToken
+  select,
+  reducer => reducer.accessToken
 )
 
 export const getRefreshTokenSelector = createSelector(
-  refreshTokenSelect,
-  refreshToken => refreshToken
+  select,
+  reducer => reducer.refreshToken
 )

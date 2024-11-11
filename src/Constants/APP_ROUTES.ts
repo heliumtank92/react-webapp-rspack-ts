@@ -1,17 +1,25 @@
 import { NavigateOptions, To } from 'react-router-dom'
 
-type AppRouteItem = {
+export type AppRouteItem = {
   pathname: To
   options?: NavigateOptions
 }
 
 const APP_ROUTES = {
   HOME: {
-    pathname: ''
+    pathname: '/'
   } as AppRouteItem,
 
   ANY: {
     pathname: '*'
+  } as AppRouteItem,
+
+  DEFAULT_UNAUTH_FALLBACK: {
+    pathname: '/'
+  } as AppRouteItem,
+
+  DEFAULT_AUTH_FALLBACK: {
+    pathname: '/'
   } as AppRouteItem
 }
 

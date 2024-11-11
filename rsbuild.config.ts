@@ -5,13 +5,13 @@ import {
   PerformanceConfig
 } from '@rsbuild/core'
 import { pluginReact } from '@rsbuild/plugin-react'
-import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser'
 import { pluginSass } from '@rsbuild/plugin-sass'
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin'
+import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser'
 
 export default defineConfig(({ env, command, envMode }): RsbuildConfig => {
   const { publicVars, parsed } = loadEnv({
-    prefixes: ['APP_'],
+    prefixes: ['APP_', 'AS_', 'npm_package_'],
     mode: envMode || process.env.NODE_ENV || 'development'
   })
 
@@ -88,5 +88,6 @@ export default defineConfig(({ env, command, envMode }): RsbuildConfig => {
       }
     }
   }
+
   return config
 })

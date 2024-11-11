@@ -11,10 +11,13 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "@am92/react-design-system": "~2.7.0",
-    "@am92/web-http": "^2.0.26",
+    "@am92/web-http": "^2.0.28",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@fontsource-variable/inter": "^5.1.0",
+    "@mui/material": "^6.1.6",
+    "@mui/x-date-pickers": "^7.22.2",
     "@reduxjs/toolkit": "^1.9.7",
-    "core-js": "^3.36.0",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "react": "^18.3.1",
@@ -26,14 +29,15 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
-    "@rsbuild/core": "^1.0.1",
-    "@rsbuild/plugin-react": "^1.0.1",
-    "@rsbuild/plugin-sass": "^1.0.1",
+    "@rsbuild/core": "^1.1.0",
+    "@rsbuild/plugin-react": "^1.0.7",
+    "@rsbuild/plugin-sass": "^1.1.0",
     "@rsdoctor/rspack-plugin": "^0.4.8",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "browserslist": "^4.24.2",
     "rsbuild-plugin-html-minifier-terser": "^1.1.1",
-    "typescript": "^5.5.2"
+    "typescript": "^5.5.2",
+    "utility-types": "^3.11.0"
   }
 }

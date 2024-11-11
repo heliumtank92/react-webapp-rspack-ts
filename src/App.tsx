@@ -1,55 +1,25 @@
-import React, { Component } from 'react'
-import { connect, ConnectedProps } from 'react-redux'
-import {
-  DsCssBaseline,
-  Experimental_CssVarsProvider as CssVarsProvider,
-  getTheme
-} from '@am92/react-design-system'
+import React from 'react'
+import { CssBaseline, ThemeProvider } from '@mui/material'
 
 import AppInitializer from './AppInitializer'
-import ThemeManager from './ThemeManager'
-
-import { getThemeReducer } from './Redux/Theme/Selectors'
+import AppTheme from './AppTheme'
 
 import { THEME_MODE_STORAGE_KEY } from '~/src/Constants/THEME'
-import { TAppStore } from './Configurations/AppStore'
 
-interface IAppProps extends PropsFromRedux {
+import './App.scss'
+
+export interface IAppProps {
   persisted: boolean
 }
 
-class App extends Component<IAppProps> {
-  render() {
-    const { persisted, theme } = this.props
-    const { fontFamily, palette, defaultMode } = theme
+const App: React.FC<IAppProps> = props => {
+  const { persisted } = props
 
-    const AppTheme = getTheme(palette, fontFamily)
-
-    return (
-      <CssVarsProvider
-        theme={AppTheme}
-        defaultMode={defaultMode}
-        modeStorageKey={THEME_MODE_STORAGE_KEY}
-      >
-        <DsCssBaseline enableColorScheme>
-          <ThemeManager />
-          {persisted && <AppInitializer />}
-        </DsCssBaseline>
-      </CssVarsProvider>
-    )
-  }
+  return (
+    <ThemeProvider theme={AppTheme} modeStorageKey={THEME_MODE_STORAGE_KEY}>
+      <CssBaseline>{persisted && <AppInitializer />}</CssBaseline>
+    </ThemeProvider>
+  )
 }
 
-const mapStateToProps = (state: TAppStore) => {
-  const theme = getThemeReducer(state)
-
-  return {
-    theme
-  }
-}
-
-const connector = connect(mapStateToProps, null)
-
-type PropsFromRedux = ConnectedProps<typeof connector>
-
-export default connector(App)
+export default App

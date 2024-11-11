@@ -12,6 +12,7 @@ import {
   useSearchParams
 } from 'react-router-dom'
 import { Subtract } from 'utility-types'
+import { AppRouteItem } from '../Constants/APP_ROUTES'
 
 /**
  * Basic Interface to extend in components wrapping the below HOC.
@@ -26,6 +27,7 @@ export interface IWithRouterProps {
   location: Location
   params: Readonly<Params<string>>
   navigateTo: (route: To, options?: NavigateOptions) => void
+  navigateToRoute: (appRoute: AppRouteItem) => void
 }
 
 /**
@@ -47,6 +49,8 @@ export default function withRouter<P extends IWithRouterProps>(
     const params = useParams()
     const navigateTo = (route: To, options?: NavigateOptions) =>
       navigate(route, options)
+    const navigateToRoute = (appRoute: AppRouteItem) =>
+      navigate(appRoute.pathname, appRoute.options)
 
     return (
       <Child
@@ -57,6 +61,7 @@ export default function withRouter<P extends IWithRouterProps>(
         location={location}
         params={params}
         navigateTo={navigateTo}
+        navigateToRoute={navigateToRoute}
       />
     )
   }

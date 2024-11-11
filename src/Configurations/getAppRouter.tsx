@@ -3,6 +3,9 @@ import { createBrowserRouter, RouteObject } from 'react-router-dom'
 
 import MainLayout from '~/src/Layouts/Main.Layout'
 
+import ErrorBoundary from '../Layouts/ErrorBoundary'
+import NotFoundLoader from '../Pages/NotFound/NotFound.Loader'
+
 import APP_ROUTES from '~/src/Constants/APP_ROUTES'
 
 const HomePage = React.lazy(
@@ -27,10 +30,21 @@ const routeObj: RouteObject[] = [
   } as RouteObject,
   {
     path: APP_ROUTES.ANY.pathname,
+    loader: NotFoundLoader,
+    errorElement: <ErrorBoundary />,
     element: <NotFoundPage />
   } as RouteObject
 ]
 
-const getAppRouter = () => createBrowserRouter(routeObj)
+const getAppRouter = () =>
+  createBrowserRouter(routeObj, {
+    future: {
+      v7_fetcherPersist: true,
+      v7_relativeSplatPath: true,
+      v7_normalizeFormMethod: true,
+      v7_partialHydration: true,
+      v7_skipActionErrorRevalidation: true
+    }
+  })
 
 export default getAppRouter

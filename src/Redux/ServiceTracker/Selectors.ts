@@ -4,13 +4,10 @@ import { TAppStore } from '~/src/Configurations/AppStore'
 
 export const SLICE_NAME = 'serviceTracker'
 
-// const select = (state: TAppStore) => state[SLICE_NAME]
+const select = (state: TAppStore) => state[SLICE_NAME]
 
 export const getServiceSelector = (state: TAppStore, serviceKey: string) => {
-  return createSelector(
-    (state: TAppStore) => state[SLICE_NAME][serviceKey],
-    serviceKeyValue => serviceKeyValue
-  )(state)
+  return createSelector(select, reducer => reducer[serviceKey])(state)
 }
 
 export const isServiceLoading = (state: TAppStore, serviceKeys: string[]) => {

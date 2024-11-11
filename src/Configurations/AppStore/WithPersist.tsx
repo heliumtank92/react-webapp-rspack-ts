@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import localforage from 'localforage'
+import { Provider } from 'react-redux'
 import {
   FLUSH,
   PAUSE,
@@ -10,6 +11,8 @@ import {
   REGISTER,
   REHYDRATE
 } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
+import App from '~/src/App'
 
 import reducers, { persistedReducers, TReducers } from '~/src/Redux/Reducers'
 
@@ -20,7 +23,7 @@ const persistConfig = {
   whitelist: persistedReducers
 }
 
-const AppStore = configureStore({
+export const AppStore = configureStore({
   reducer: persistReducer<TReducers>(persistConfig, reducers),
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
@@ -33,10 +36,16 @@ const AppStore = configureStore({
 
 const PersistedAppStore = persistStore(AppStore)
 
-export default AppStore
+export type TAppStore = ReturnType<typeof AppStore.getState>
 
-type TAppStore = ReturnType<typeof AppStore.getState>
+export type TAppDispatch = typeof AppStore.dispatch
 
-type TAppDispatch = typeof AppStore.dispatch
-
-export { TAppStore, TAppDispatch, PersistedAppStore }
+export const AppStoreProvider: React.FC<{
+  AppComponent: React.FunctionComponent<{ persisted: boolean }>
+}> = ({ AppComponent }) => (
+  <Provider store={AppStore}>
+    <PersistGate persistor={PersistedAppStore} onBeforeLift={() => undefined}>
+      {(persisted: boolean) => <AppComponent persisted={persisted} />}
+    </PersistGate>
+  </Provider>
+)

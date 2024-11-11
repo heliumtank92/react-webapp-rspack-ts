@@ -1,24 +1,22 @@
-import React, { PureComponent, Suspense } from 'react'
+import React, { Suspense } from 'react'
 import { RouterProvider } from 'react-router-dom'
 
-import Loader from './Components/Loader'
-
 import getAppRouter from './Configurations/getAppRouter'
-
-export interface IAppRouterProps {}
+import Loader from './Components/Loader'
 
 let router: ReturnType<typeof getAppRouter> | undefined
 
-export default class AppRouter extends PureComponent<IAppRouterProps> {
-  render() {
-    if (!router) {
-      router = getAppRouter()
-    }
+export interface IAppRouterProps {}
 
-    return (
-      <Suspense fallback={<Loader />}>
-        <RouterProvider router={router} />
-      </Suspense>
-    )
+const AppRouter: React.FC<IAppRouterProps> = () => {
+  if (!router) {
+    router = getAppRouter()
   }
+
+  return (
+    <Suspense fallback={<Loader />}>
+      <RouterProvider router={router} />
+    </Suspense>
+  )
 }
+export default AppRouter
