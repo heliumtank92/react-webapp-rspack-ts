@@ -9,6 +9,7 @@ import { pluginSass } from '@rsbuild/plugin-sass'
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin'
 import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser'
 import { pluginFavicon } from './plugins/pluginFavicon'
+import { GenerateSW } from '@aaroon/workbox-rspack-plugin'
 
 export default defineConfig(({ envMode }): RsbuildConfig => {
   const { publicVars, parsed } = loadEnv({
@@ -99,7 +100,8 @@ export default defineConfig(({ envMode }): RsbuildConfig => {
               supports: {
                 generateTileGraph: true
               }
-            })
+            }),
+          process.env.NODE_ENV === 'production' && new GenerateSW()
         ].filter(Boolean)
       }
     }
