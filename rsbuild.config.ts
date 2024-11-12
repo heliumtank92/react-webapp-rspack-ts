@@ -8,7 +8,6 @@ import { pluginReact } from '@rsbuild/plugin-react'
 import { pluginSass } from '@rsbuild/plugin-sass'
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin'
 import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser'
-import FaviconsRspackPlugin from 'favicons-rspack-plugin'
 
 export default defineConfig(({ envMode }): RsbuildConfig => {
   const { publicVars, parsed } = loadEnv({
@@ -56,6 +55,14 @@ export default defineConfig(({ envMode }): RsbuildConfig => {
       }
     },
     html: {
+      appIcon: {
+        name: 'My Website',
+        icons: [
+          { src: './public/static/image/icon-192.png', size: 192 },
+          { src: './public/static/image/icon-512.png', size: 512 }
+        ]
+      },
+      favicon: './public/static/image/favicon.svg',
       template: './public/index.html',
       templateParameters: parsed,
       tags: [
@@ -71,7 +78,7 @@ export default defineConfig(({ envMode }): RsbuildConfig => {
     },
     performance: {
       bundleAnalyze:
-        process.env.BUNDLE_ANALYZE === 'true' ? bundleAnalyze : undefined,
+        process.env.RSDOCTOR === 'true' ? bundleAnalyze : undefined,
       removeConsole: process.env.NODE_ENV === 'production',
       removeMomentLocale: true,
       preload: {
@@ -94,12 +101,7 @@ export default defineConfig(({ envMode }): RsbuildConfig => {
           process.env.RSDOCTOR &&
             new RsdoctorRspackPlugin({
               // plugin options
-            }),
-          new FaviconsRspackPlugin({
-            logo: './public/logo.svg',
-            prefix: 'static/icons/',
-            inject: true
-          })
+            })
         ].filter(Boolean)
       }
     }
