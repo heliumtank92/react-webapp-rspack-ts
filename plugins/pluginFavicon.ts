@@ -97,8 +97,7 @@ function getSvgBuffer(svgPath: string): Buffer {
 async function getFileData(
   svgBuffer: Buffer,
   size: number,
-  format: 'ico' | 'png',
-  maskable: boolean = false
+  format: 'ico' | 'png'
 ) {
   let sharpObj = sharp(svgBuffer).resize(size, size)
   if (format === 'png') {
