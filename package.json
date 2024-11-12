@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "scripts": {
     "build": "rsbuild build",
-    "build:analyze": "RSDOCTOR=true npm run build",
     "check": "biome check --write",
     "dev": "rsbuild dev --open",
+    "doctor": "RSDOCTOR=true npm run build",
     "format": "biome format --write",
     "preview": "rsbuild preview"
   },
@@ -36,10 +36,8 @@
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "browserslist": "^4.24.2",
-    "convert-svg-to-png": "^0.6.4",
     "rsbuild-plugin-html-minifier-terser": "^1.1.1",
     "sharp": "^0.33.5",
-    "svg-to-ico": "^1.0.15",
     "typescript": "^5.5.2",
     "utility-types": "^3.11.0"
   }

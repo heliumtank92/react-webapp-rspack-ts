@@ -70,8 +70,6 @@ export default defineConfig(({ envMode }): RsbuildConfig => {
       ]
     },
     performance: {
-      bundleAnalyze:
-        process.env.RSDOCTOR === 'true' ? bundleAnalyze : undefined,
       removeConsole: process.env.NODE_ENV === 'production',
       removeMomentLocale: true,
       preload: {
@@ -98,7 +96,9 @@ export default defineConfig(({ envMode }): RsbuildConfig => {
           // Only register the plugin when RSDOCTOR is true, as the plugin will increase the build time.
           process.env.RSDOCTOR &&
             new RsdoctorRspackPlugin({
-              // plugin options
+              supports: {
+                generateTileGraph: true
+              }
             })
         ].filter(Boolean)
       }
