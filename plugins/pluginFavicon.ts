@@ -9,6 +9,7 @@ type FileConfig = {
   fileName: string
   buffer: Buffer
   size: number
+  format: 'png' | 'ico'
 }
 
 export type PluginFaviconOptions = {
@@ -29,6 +30,20 @@ export const pluginFavicon = (
 ): RsbuildPlugin => ({
   name: 'plugin-favicon',
   setup: async (api: RsbuildPluginAPI) => {
+    // Get Rsbuild Config
+    const rsbiuldConfig = api.getRsbuildConfig()
+
+    // Bypass Plugin if mode is not production
+    if (rsbiuldConfig.mode !== 'production') {
+      return
+    }
+
+    // Extract Paths from Rsbuild Config
+    const paths = rsbiuldConfig.output?.distPath || {}
+    const distPath = `./${paths.root}`
+    const imagePath = `${distPath}/${paths.image}`
+
+    // Build Plugin Options
     const opts = { ...DEFAULT_OPTIONS, ...options }
     const pngSizes = opts.pngSizes || []
     const icoSizes = opts.icoSizes || []
@@ -37,26 +52,8 @@ export const pluginFavicon = (
     const svgBuffer = getSvgBuffer(opts.svgPath || '')
     const svgFileName = `favicon.${generateContentHash(svgBuffer)}.svg`
 
-    // Build Map of Files to Write
-    const fileConfigs: FileConfig[] = []
-
-    // Generate PNG Files by Defined Sizes
-    for (const size of pngSizes) {
-      const { buffer, fileName } = await getFileData(svgBuffer, size, 'png')
-      fileConfigs.push({ fileName, buffer, size })
-    }
-
-    // Generate ICO Files by Defined Sizes
-    for (const size of icoSizes) {
-      const { buffer, fileName } = await getFileData(svgBuffer, size, 'ico')
-      fileConfigs.push({ fileName, buffer, size })
-    }
-
-    const rsbiuldConfig = api.getRsbuildConfig()
-    const paths = rsbiuldConfig.output?.distPath || {}
-
-    const distPath = `./${paths.root}`
-    const imagePath = `${distPath}/${paths.image}`
+    // Build File Configs for Icons to be generated
+    const fileConfigs = await getFileConfigs(svgBuffer, pngSizes, icoSizes)
 
     // Emit Favicon Files
     api.onBeforeEnvironmentCompile(() => {
@@ -71,9 +68,7 @@ export const pluginFavicon = (
     // Update Rsbuild Config
     api.modifyRsbuildConfig(async config => {
       config.html = config.html || {}
-
       config.html.favicon = `${distPath}/${svgFileName}`
-
       config.html.appIcon = {
         name: appName,
         icons: fileConfigs.map(fileConfig => {
@@ -83,6 +78,7 @@ export const pluginFavicon = (
           }
         })
       }
+
       return config
     })
   }
@@ -94,19 +90,58 @@ function getSvgBuffer(svgPath: string): Buffer {
   return svgBuffer
 }
 
+async function getFileConfigs(
+  svgBuffer: Buffer,
+  pngSizes: number[],
+  icoSizes: number[]
+): Promise<FileConfig[]> {
+  const promises: Array<Promise<FileConfig>> = []
+
+  // Generate PNG Files by Defined Sizes
+  for (const size of pngSizes) {
+    const promise = getFileData(svgBuffer, size, 'png')
+    promises.push(promise)
+  }
+
+  // Generate ICO Files by Defined Sizes
+  for (const size of icoSizes) {
+    const promise = getFileData(svgBuffer, size, 'ico')
+    promises.push(promise)
+  }
+
+  const promiseResults = await Promise.allSettled(promises)
+  const fileConfigs: FileConfig[] = []
+
+  promiseResults.forEach(promiseResult => {
+    if (promiseResult.status === 'fulfilled') {
+      fileConfigs.push(promiseResult.value)
+    } else {
+      console.error(promiseResult.reason)
+    }
+  })
+
+  return fileConfigs
+}
+
 async function getFileData(
   svgBuffer: Buffer,
   size: number,
   format: 'ico' | 'png'
-) {
-  let sharpObj = sharp(svgBuffer).resize(size, size)
-  if (format === 'png') {
-    sharpObj = sharpObj.png()
+): Promise<FileConfig> {
+  try {
+    let sharpObj = sharp(svgBuffer).resize(size, size)
+    if (format === 'png') {
+      sharpObj = sharpObj.png()
+    }
+    const buffer = await sharpObj.toBuffer()
+    const hash = generateContentHash(buffer)
+    const fileName = `icon-${size}.${hash}.${format}`
+    return { buffer, fileName, size, format }
+  } catch (error) {
+    throw new Error(
+      `[pluginFavicon] Error generating '${format}' file for size '${size}x${size}': ${error}`
+    )
   }
-  const buffer = await sharpObj.toBuffer()
-  const hash = generateContentHash(buffer)
-  const fileName = `icon-${size}.${hash}.${format}`
-  return { buffer, fileName }
 }
 
 function generateContentHash(content: Buffer): string {

@@ -24,6 +24,8 @@ export default defineConfig(({ envMode }): RsbuildConfig => {
   }
 
   const config: RsbuildConfig = {
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+
     dev: {
       lazyCompilation: true,
       progressBar: true
