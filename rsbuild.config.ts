@@ -9,8 +9,9 @@ import { pluginSass } from '@rsbuild/plugin-sass'
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin'
 import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser'
 import { pluginFavicon } from './plugins/pluginFavicon'
-import SharpImageReplacePlugin from './plugins/SharpImageReplacePlugin'
+import RenameAssetsAndReferencesPlugin from './plugins/RenameAssetsAndReferencesPlugin'
 import { GenerateSW } from '@aaroon/workbox-rspack-plugin'
+import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin'
 
 export default defineConfig(({ envMode }): RsbuildConfig => {
   const { publicVars, parsed } = loadEnv({
@@ -74,7 +75,7 @@ export default defineConfig(({ envMode }): RsbuildConfig => {
       ]
     },
     performance: {
-      removeConsole: process.env.NODE_ENV === 'production',
+      removeConsole: false, // process.env.NODE_ENV === 'production',
       removeMomentLocale: true,
       preload: {
         type: 'all-chunks',
@@ -93,6 +94,74 @@ export default defineConfig(({ envMode }): RsbuildConfig => {
     ],
     tools: {
       rspack: {
+        module: {
+          rules: [
+            {
+              test: /\.(jpe?g|png|gif|svg)$/i,
+              use: [
+                {
+                  loader: ImageMinimizerPlugin.loader,
+                  options: {
+                    minimizer: {
+                      implementation: ImageMinimizerPlugin.sharpMinify,
+                      options: {
+                        encodeOptions: {
+                          jpeg: {
+                            // https://sharp.pixelplumbing.com/api-output#jpeg
+                            quality: 100
+                          },
+                          webp: {
+                            // https://sharp.pixelplumbing.com/api-output#webp
+                            lossless: true
+                          },
+                          avif: {
+                            // https://sharp.pixelplumbing.com/api-output#avif
+                            lossless: true
+                          },
+
+                          // png by default sets the quality to 100%, which is same as lossless
+                          // https://sharp.pixelplumbing.com/api-output#png
+                          png: {},
+
+                          // gif does not support lossless compression at all
+                          // https://sharp.pixelplumbing.com/api-output#gif
+                          gif: {}
+                        }
+                      }
+                    },
+                    generator: [
+                      {
+                        // You can apply generator using `?as=webp`, you can use any name and provide more options
+                        preset: 'webp',
+                        implementation: ImageMinimizerPlugin.sharpGenerate,
+                        options: {
+                          encodeOptions: {
+                            webp: {
+                              quality: 90
+                            }
+                          }
+                        }
+                      },
+                      {
+                        // You can apply generator using `?as=webp`, you can use any name and provide more options
+                        preset: 'avif',
+                        implementation: ImageMinimizerPlugin.sharpGenerate,
+                        options: {
+                          encodeOptions: {
+                            avif: {
+                              quality: 90
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              type: 'asset/resource'
+            }
+          ]
+        },
         watchOptions: {
           ignored: /node_modules/
         },
@@ -104,14 +173,8 @@ export default defineConfig(({ envMode }): RsbuildConfig => {
                 generateTileGraph: true
               }
             }),
-          process.env.NODE_ENV === 'production' && new GenerateSW(),
-          new SharpImageReplacePlugin({
-            jpegQuality: 80,
-            pngCompressionLevel: 8,
-            webpQuality: 75,
-            avifQuality: 50,
-            replaceWithWebp: true // Globally replace all images with WebP
-          })
+          // process.env.NODE_ENV === 'production' && new GenerateSW(),
+          new RenameAssetsAndReferencesPlugin()
         ].filter(Boolean)
       }
     }
