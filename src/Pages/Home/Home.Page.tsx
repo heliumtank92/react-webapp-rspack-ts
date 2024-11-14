@@ -1,5 +1,8 @@
 import React from 'react'
 import { Typography } from '@mui/material'
+import HOME_IMAGE from '~/src/Assets/HOME_IMAGE'
+
+console.log('HOME_IMAGE', HOME_IMAGE)
 
 interface IHomePageProps {}
 

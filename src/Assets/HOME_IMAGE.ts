@@ -1,18 +1,16 @@
 const HOME_IMAGE = [
   {
-    src: new URL('~/public/assets/images/home.png?as=avif', import.meta.url)
-      .href,
+    src: new URL('~/src/AssetFiles/home.png?as=avif', import.meta.url).href,
     alt: 'Home Image',
     as: 'image/avif'
   },
   {
-    src: new URL('~/public/assets/images/home.png?as=webp', import.meta.url)
-      .href,
+    src: new URL('~/src/AssetFiles/home.png?as=webp', import.meta.url).href,
     alt: 'Home Image',
     as: 'image/webp'
   },
   {
-    src: new URL('~/public/assets/images/home.png', import.meta.url).href,
+    src: new URL('~/src/AssetFiles/home.png', import.meta.url).href,
     alt: 'Home Image',
     as: 'image/png'
   }
