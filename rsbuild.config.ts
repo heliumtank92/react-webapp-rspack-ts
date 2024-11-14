@@ -9,6 +9,7 @@ import { pluginSass } from '@rsbuild/plugin-sass'
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin'
 import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser'
 import { pluginFavicon } from './plugins/pluginFavicon'
+import SharpImageReplacePlugin from './plugins/SharpImageReplacePlugin'
 import { GenerateSW } from '@aaroon/workbox-rspack-plugin'
 
 export default defineConfig(({ envMode }): RsbuildConfig => {
@@ -103,7 +104,14 @@ export default defineConfig(({ envMode }): RsbuildConfig => {
                 generateTileGraph: true
               }
             }),
-          process.env.NODE_ENV === 'production' && new GenerateSW()
+          process.env.NODE_ENV === 'production' && new GenerateSW(),
+          new SharpImageReplacePlugin({
+            jpegQuality: 80,
+            pngCompressionLevel: 8,
+            webpQuality: 75,
+            avifQuality: 50,
+            replaceWithWebp: true // Globally replace all images with WebP
+          })
         ].filter(Boolean)
       }
     }
