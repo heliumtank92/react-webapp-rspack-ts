@@ -1,6 +1,6 @@
-import React from 'react'
-import { SupportedColorScheme, useColorScheme } from '@mui/material'
-import { Subtract } from 'utility-types'
+import { type SupportedColorScheme, useColorScheme } from '@mui/material'
+import type React from 'react'
+import type { Subtract } from 'utility-types'
 
 /**
  * Basic Interface to extend in components wrapping the below HOC.

@@ -1,12 +1,12 @@
-import { combineReducers, ReducersMapObject } from 'redux'
+import { type ReducersMapObject, combineReducers } from 'redux'
 
 import AuthReducer from './Auth/Reducer'
 import { SLICE_NAME as AuthSliceName } from './Auth/Selectors'
-import { T_AUTH_REDUCER } from './Auth/TYPES'
+import type { T_AUTH_REDUCER } from './Auth/TYPES'
 
 import ServiceTrackerReducer from './ServiceTracker/Reducer'
 import { SLICE_NAME as ServiceTrackerSliceName } from './ServiceTracker/Selectors'
-import { T_SERVICE_TRACKER_REDUCER } from './ServiceTracker/TYPES'
+import type { T_SERVICE_TRACKER_REDUCER } from './ServiceTracker/TYPES'
 
 export type TReducers = {
   [AuthSliceName]: T_AUTH_REDUCER

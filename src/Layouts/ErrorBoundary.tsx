@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import type React from 'react'
+import { useEffect } from 'react'
 import {
   isRouteErrorResponse,
   useNavigate,
@@ -13,7 +14,7 @@ const ErrorBoundary: React.FC = () => {
 
   useEffect(() => {
     if (isRouteErrorResponse(error)) {
-      return navigate(error.data)
+      navigate(error.data)
     }
   })
 

@@ -2,9 +2,9 @@ import { WebHttpError } from '@am92/web-http'
 
 import loginWithRefreshTokenService from './Auth/Services/loginWithRefreshToken.Service'
 
-import { TraceActions } from './serviceActionCreator'
+import type { TraceActions } from './serviceActionCreator'
 
-import { TAppDispatch } from '../Configurations/AppStore'
+import type { TAppDispatch } from '../Configurations/AppStore'
 
 const loginWithRefreshTokenServiceDispatcher = loginWithRefreshTokenService()
 
@@ -45,12 +45,13 @@ export default function serviceActionCreator<
             getState,
             data
           )
-        } else {
-          if (traceActions.error && typeof traceActions.error === 'function') {
-            dispatch(traceActions.error({ ...err }))
-          }
-          return err
         }
+
+        if (traceActions.error && typeof traceActions.error === 'function') {
+          dispatch(traceActions.error({ ...err }))
+        }
+
+        return err
       }
     }
   }
@@ -60,7 +61,7 @@ async function retryWithTokenRotation<RequestData = void, Response = unknown>(
   traceActions: TraceActions<Response>,
   service: (data: RequestData) => Promise<Response>,
   dispatch: TAppDispatch,
-  getState: () => unknown,
+  _getState: () => unknown,
   data: RequestData
 ): Promise<Response | WebHttpError> {
   const tokenRotationResponse =

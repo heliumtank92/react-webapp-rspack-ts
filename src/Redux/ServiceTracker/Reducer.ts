@@ -1,6 +1,6 @@
-import { Action } from 'redux'
+import type { Action } from 'redux'
 
-import { INITIAL_STATE, T_SERVICE_TRACKER_REDUCER } from './TYPES'
+import { INITIAL_STATE, type T_SERVICE_TRACKER_REDUCER } from './TYPES'
 
 export default function ServiceTrackerReducer(
   state: T_SERVICE_TRACKER_REDUCER = INITIAL_STATE,
@@ -24,7 +24,7 @@ export default function ServiceTrackerReducer(
       return { ...state, [key]: 'ERROR' }
     }
     default: {
-      return state
+      return INITIAL_STATE
     }
   }
 }

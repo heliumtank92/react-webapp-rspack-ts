@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit'
 
-import { TAppStore } from '~/src/Configurations/AppStore'
+import type { TAppStore } from '~/src/Configurations/AppStore'
 
 export const SLICE_NAME = 'auth'
 

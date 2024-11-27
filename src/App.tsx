@@ -1,5 +1,5 @@
-import React from 'react'
 import { CssBaseline, ThemeProvider } from '@mui/material'
+import type React from 'react'
 
 import AppInitializer from './AppInitializer'
 import AppTheme from './AppTheme'

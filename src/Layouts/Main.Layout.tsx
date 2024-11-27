@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import { PureComponent } from 'react'
 import { Outlet } from 'react-router-dom'
 
 export default class MainLayout extends PureComponent {

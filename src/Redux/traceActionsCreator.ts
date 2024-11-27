@@ -1,7 +1,7 @@
+import type { WebHttpError } from '@am92/web-http'
 import { createAction } from '@reduxjs/toolkit'
-import { WebHttpError } from '@am92/web-http'
 
-import { TraceActions } from './serviceActionCreator'
+import type { TraceActions } from './serviceActionCreator'
 
 export default function traceActionsCreator<Response = unknown>(
   serviceName: string

@@ -1,36 +1,46 @@
-import {
-  loadEnv,
-  defineConfig,
-  RsbuildConfig,
-  PerformanceConfig
-} from '@rsbuild/core'
+import { GenerateSW } from '@aaroon/workbox-rspack-plugin'
+import { type RsbuildConfig, defineConfig, loadEnv } from '@rsbuild/core'
+import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill'
 import { pluginReact } from '@rsbuild/plugin-react'
-import { pluginSass } from '@rsbuild/plugin-sass'
+// import { pluginImageCompress } from '@rsbuild/plugin-image-compress'
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin'
 import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser'
-import { pluginFavicon } from './plugins/pluginFavicon'
-import RenameAssetsAndReferencesPlugin from './plugins/RenameAssetsAndReferencesPlugin'
-import { GenerateSW } from '@aaroon/workbox-rspack-plugin'
-import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin'
 
-export default defineConfig(({ envMode }): RsbuildConfig => {
+import manifestConfig from './manifest.config'
+import { pluginFavicon } from './rsBuildPlugins/Favicon'
+import { pluginRenameAssetsAndReferences } from './rsBuildPlugins/pluginRenameAssetsAndReferences'
+
+export default defineConfig(({ env, command, envMode, meta }) => {
+  const isProduction = envMode === 'production'
   const { publicVars, parsed } = loadEnv({
     prefixes: ['APP_', 'AS_', 'npm_package_'],
     mode: envMode || process.env.NODE_ENV || 'development'
   })
 
-  const bundleAnalyze: PerformanceConfig['bundleAnalyze'] = {
-    analyzerMode: 'server',
-    openAnalyzer: true,
-    generateStatsFile: true
+  const rsBuildPlugins: RsbuildConfig['plugins'] = [
+    pluginReact(),
+    pluginNodePolyfill()
+  ]
+
+  if (isProduction) {
+    rsBuildPlugins.push(
+      pluginHtmlMinifierTerser(),
+      pluginFavicon('./public/favicon.svg', manifestConfig),
+      // Issues with the image imageminimizer webpack plugin
+      // pluginImageCompress(),
+      pluginRenameAssetsAndReferences()
+    )
   }
 
   const config: RsbuildConfig = {
-    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
-
     dev: {
       lazyCompilation: true,
       progressBar: true
+    },
+    server: {
+      // headers: {
+      //   'cache-control': 'max-age=31536000, s-maxage=31536000'
+      // }
     },
     source: {
       define: publicVars,
@@ -42,140 +52,78 @@ export default defineConfig(({ envMode }): RsbuildConfig => {
       }
     },
     output: {
-      cleanDistPath: process.env.NODE_ENV === 'production',
-      copy: [{ from: 'public/static', to: 'static' }],
-      inlineStyles: {
-        enable: true,
-        test: /[\\/]base\.\w+\.css$/
-      },
+      cleanDistPath: isProduction,
       legalComments: 'none',
-      polyfill: process.env.NODE_ENV === 'production' ? 'usage' : 'off',
+      polyfill: isProduction ? 'usage' : 'off',
       sourceMap: {
-        js:
-          process.env.NODE_ENV === 'production'
-            ? // Use a high quality source map format for production
-              'source-map'
-            : // Use a more performant source map format for development
-              'cheap-module-source-map',
+        js: isProduction
+          ? // Use a high quality source map format for production
+            'source-map'
+          : // Use a more performant source map format for development
+            'cheap-module-source-map',
         css: false
       }
     },
+
+    plugins: rsBuildPlugins,
     html: {
       template: './public/index.html',
       templateParameters: parsed,
+      title: manifestConfig.appShortName || manifestConfig.appName,
+      meta: {
+        'og:title': manifestConfig.appShortName || manifestConfig.appName || '',
+        'og:description': manifestConfig.appDescription || '',
+        'og:type': 'website',
+        'og:url': parsed.APP_URL,
+        'og:image': `${parsed.APP_URL}/favicon.svg`,
+        'twitter:card': 'summary',
+        'twitter:title':
+          manifestConfig.appShortName || manifestConfig.appName || '',
+        'twitter:description': manifestConfig.appDescription || '',
+        'twitter:url': parsed.APP_URL,
+        'twitter:image': `${parsed.APP_URL}/favicon.svg`
+      },
       tags: [
         tags => {
-          tags.forEach(tag => {
+          for (const tag of tags) {
             if (tag.attrs?.rel === 'stylesheet') {
               tag.attrs.media = 'print'
               tag.attrs.onload = "this.media='all'"
             }
-          })
+          }
         }
       ]
     },
     performance: {
-      removeConsole: false, // process.env.NODE_ENV === 'production',
+      removeConsole: isProduction,
       removeMomentLocale: true,
-      preload: {
-        type: 'all-chunks',
-        include: process.env.PRELOAD_SCRIPTS?.split(',').map(
-          scriptName => new RegExp(`/[\\/]${scriptName}\.\w+\.js$/`)
-        )
-      },
+      preload:
+        (process.env.PRELOAD_SCRIPTS && {
+          type: 'all-assets',
+          include: process.env.PRELOAD_SCRIPTS?.split(',').map(
+            scriptName => new RegExp(`/[\\/]${scriptName}\.\w+\.js$/`)
+          )
+        }) ||
+        undefined,
       dnsPrefetch: process.env.DNS_PREFETCH?.split(','),
       preconnect: process.env.PRECONNECT?.split(',')
     },
-    plugins: [
-      pluginReact(),
-      pluginHtmlMinifierTerser(),
-      pluginSass(),
-      pluginFavicon(parsed.APP_TITLE)
-    ],
     tools: {
-      rspack: {
-        module: {
-          rules: [
-            {
-              test: /\.(jpe?g|png|gif|svg)$/i,
-              use: [
-                {
-                  loader: ImageMinimizerPlugin.loader,
-                  options: {
-                    minimizer: {
-                      implementation: ImageMinimizerPlugin.sharpMinify,
-                      options: {
-                        encodeOptions: {
-                          jpeg: {
-                            // https://sharp.pixelplumbing.com/api-output#jpeg
-                            quality: 100
-                          },
-                          webp: {
-                            // https://sharp.pixelplumbing.com/api-output#webp
-                            lossless: true
-                          },
-                          avif: {
-                            // https://sharp.pixelplumbing.com/api-output#avif
-                            lossless: true
-                          },
-
-                          // png by default sets the quality to 100%, which is same as lossless
-                          // https://sharp.pixelplumbing.com/api-output#png
-                          png: {},
-
-                          // gif does not support lossless compression at all
-                          // https://sharp.pixelplumbing.com/api-output#gif
-                          gif: {}
-                        }
-                      }
-                    },
-                    generator: [
-                      {
-                        // You can apply generator using `?as=webp`, you can use any name and provide more options
-                        preset: 'webp',
-                        implementation: ImageMinimizerPlugin.sharpGenerate,
-                        options: {
-                          encodeOptions: {
-                            webp: {
-                              quality: 90
-                            }
-                          }
-                        }
-                      },
-                      {
-                        // You can apply generator using `?as=webp`, you can use any name and provide more options
-                        preset: 'avif',
-                        implementation: ImageMinimizerPlugin.sharpGenerate,
-                        options: {
-                          encodeOptions: {
-                            avif: {
-                              quality: 90
-                            }
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              ],
-              type: 'asset/resource'
-            }
-          ]
-        },
-        watchOptions: {
-          ignored: /node_modules/
-        },
-        plugins: [
-          // Only register the plugin when RSDOCTOR is true, as the plugin will increase the build time.
-          process.env.RSDOCTOR &&
+      rspack(config, { appendPlugins }) {
+        // Only register the plugin when RSDOCTOR is true, as the plugin will increase the build time.
+        if (process.env.RSDOCTOR) {
+          appendPlugins(
             new RsdoctorRspackPlugin({
               supports: {
                 generateTileGraph: true
               }
-            }),
-          // process.env.NODE_ENV === 'production' && new GenerateSW(),
-          new RenameAssetsAndReferencesPlugin()
-        ].filter(Boolean)
+            })
+          )
+        }
+
+        if (isProduction) {
+          appendPlugins(new GenerateSW({ swDest: './sw.js' }))
+        }
       }
     }
   }

@@ -1,7 +1,7 @@
 import { getIsLoggedInSelector } from '~/src/Redux/Auth/Selectors'
 
-import APP_ROUTES from '~/src/Constants/APP_ROUTES'
 import { AppStore } from '~/src/Configurations/AppStore'
+import APP_ROUTES from '~/src/Constants/APP_ROUTES'
 
 export default function NotFoundLoader() {
   const state = AppStore.getState()
@@ -11,7 +11,9 @@ export default function NotFoundLoader() {
     throw new Response(APP_ROUTES.DEFAULT_UNAUTH_FALLBACK.pathname as string, {
       status: 404
     })
-  } else {
+  }
+
+  if (isLoggedIn) {
     throw new Response(APP_ROUTES.DEFAULT_AUTH_FALLBACK.pathname as string, {
       status: 404
     })

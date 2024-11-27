@@ -1,6 +1,5 @@
-import { APP_TITLE } from '~/src/Configurations/env'
+import manifestConfig from '~/manifest.config'
 
-export const THEME_MODE_STORAGE_KEY: string = `${APP_TITLE.replaceAll(
-  ' ',
-  '-'
-)}-mode`
+export const THEME_MODE_STORAGE_KEY: string = `${(
+  manifestConfig.appName || ''
+).replaceAll(' ', '-')}-mode`

@@ -1,12 +1,12 @@
-import { Compiler, Compilation, WebpackPluginInstance } from '@rspack/core'
+import type { Compilation, Compiler, WebpackPluginInstance } from '@rspack/core'
 
 const EXTENSIONS = ['webp', 'avif']
 
-class RenameAssetsAndReferencesPlugin implements WebpackPluginInstance {
+class RenameAssetsAndReferencesRsPackPlugin implements WebpackPluginInstance {
   // The apply method hooks into Rspack's compiler lifecycle
   apply(compiler: Compiler): void {
     compiler.hooks.emit.tapAsync(
-      'RenameAssetsAndReferencesPlugin',
+      'RenameAssetsAndReferencesRsPackPlugin',
       (compilation: Compilation, callback: () => void) => {
         const assets = compilation.getAssets()
 
@@ -38,10 +38,10 @@ class RenameAssetsAndReferencesPlugin implements WebpackPluginInstance {
             let fileContent = compilation.assets[fileName].source().toString()
 
             // Update references to the renamed assets in the content
-            renamedAssets.forEach(({ oldName, newName }) => {
+            for (const { oldName, newName } of renamedAssets) {
               const regex = new RegExp(oldName, 'g')
               fileContent = fileContent.replace(regex, newName)
-            })
+            }
 
             // Update the file content in the compilation
             const fileContentSource = new compiler.webpack.sources.RawSource(
@@ -52,9 +52,9 @@ class RenameAssetsAndReferencesPlugin implements WebpackPluginInstance {
         }
 
         // Add renamed assets back to the compilation
-        renamedAssets.forEach(({ oldName, newName }) =>
+        for (const { oldName, newName } of renamedAssets) {
           compilation.renameAsset(oldName, newName)
-        )
+        }
 
         // Continue the build process
         callback()
@@ -63,4 +63,4 @@ class RenameAssetsAndReferencesPlugin implements WebpackPluginInstance {
   }
 }
 
-export default RenameAssetsAndReferencesPlugin
+export default RenameAssetsAndReferencesRsPackPlugin

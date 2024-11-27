@@ -2,19 +2,17 @@ import React, { Suspense } from 'react'
 
 import Loader from './Components/Loader'
 
-import AppRouter from './AppRouter'
-import performHandshake from './Services/performHandshake'
 import { WEB_HTTP_CONTEXT } from '@am92/web-http'
-import { asHttp } from './Configurations/WebHttp'
 import { useSelector } from 'react-redux'
+import AppRouter from './AppRouter'
+import { asHttp } from './Configurations/WebHttp'
 import {
   getAccessTokenSelector,
   getRefreshTokenSelector
 } from './Redux/Auth/Selectors'
+import performHandshake from './Services/performHandshake'
 
-export interface IAppInitializerProps {}
-
-const AppInitializer: React.FC<IAppInitializerProps> = () => {
+const AppInitializer: React.FC = () => {
   const accessToken = useSelector(getAccessTokenSelector)
   const refreshToken = useSelector(getRefreshTokenSelector)
   const [initiated, setInitiated] = React.useState(false)
@@ -30,7 +28,7 @@ const AppInitializer: React.FC<IAppInitializerProps> = () => {
 
     try {
       await performHandshake()
-      await initeAppData()
+      await initAppData()
       setInitiated(true)
     } catch (error) {
       console.log('AppInitializer error', error)
@@ -39,7 +37,7 @@ const AppInitializer: React.FC<IAppInitializerProps> = () => {
   }
 
   // NOTE: All Application Level Initialization Logic
-  const initeAppData = async () => {}
+  const initAppData = async () => {}
 
   React.useEffect(() => {
     initiateApp()

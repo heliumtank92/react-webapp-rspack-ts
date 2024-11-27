@@ -5,19 +5,23 @@ import {
   FLUSH,
   PAUSE,
   PERSIST,
-  persistReducer,
-  persistStore,
   PURGE,
   REGISTER,
-  REHYDRATE
+  REHYDRATE,
+  persistReducer,
+  persistStore
 } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
-import App from '~/src/App'
 
-import reducers, { persistedReducers, TReducers } from '~/src/Redux/Reducers'
+import reducers, {
+  persistedReducers,
+  type TReducers
+} from '~/src/Redux/Reducers'
+
+import manifestConfig from '~/manifest.config'
 
 const persistConfig = {
-  key: process.env.APP_TITLE || 'APP_TITLE',
+  key: manifestConfig.appName || 'APP_TITLE',
   version: 1,
   storage: localforage,
   whitelist: persistedReducers

@@ -1,7 +1,7 @@
-import { PayloadActionCreator } from '@reduxjs/toolkit'
-import { WebHttpError } from '@am92/web-http'
+import type { WebHttpError } from '@am92/web-http'
+import type { PayloadActionCreator } from '@reduxjs/toolkit'
 
-import { TAppDispatch } from '../Configurations/AppStore'
+import type { TAppDispatch } from '../Configurations/AppStore'
 
 export type TraceActions<TResponse> = {
   loading: PayloadActionCreator<undefined, string>

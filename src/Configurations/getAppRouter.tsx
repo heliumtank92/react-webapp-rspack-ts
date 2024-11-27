@@ -1,12 +1,12 @@
 import React from 'react'
-import { createBrowserRouter, RouteObject } from 'react-router-dom'
+import { type RouteObject, createBrowserRouter } from 'react-router-dom'
 
 import MainLayout from '~/src/Layouts/Main.Layout'
 
 import ErrorBoundary from '../Layouts/ErrorBoundary'
-import NotFoundLoader from '../Pages/NotFound/NotFound.Loader'
 
 import APP_ROUTES from '~/src/Constants/APP_ROUTES'
+import NotFoundLoader from '../Pages/NotFound/NotFound.Loader'
 
 const HomePage = React.lazy(
   () => import(/* webpackChunkName: "Home" */ '~/src/Pages/Home/Home.Page')

@@ -1,0 +1,12 @@
+pre-commit:
+  parallel: true
+  commands:
+    compile:
+      run: npm run tsc:lint -- --noEmit
+      stage_fixed: true
+    check:
+      run: npm run check -- --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+    format:
+      run: npm run format -- --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true

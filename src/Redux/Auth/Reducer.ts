@@ -1,7 +1,7 @@
-import { createSlice, CreateSliceOptions } from '@reduxjs/toolkit'
+import { type CreateSliceOptions, createSlice } from '@reduxjs/toolkit'
 
 import { SLICE_NAME } from './Selectors'
-import { INITIAL_STATE, T_AUTH_REDUCER } from './TYPES'
+import { INITIAL_STATE, type T_AUTH_REDUCER } from './TYPES'
 
 const sliceOptions: CreateSliceOptions<T_AUTH_REDUCER> = {
   name: SLICE_NAME,

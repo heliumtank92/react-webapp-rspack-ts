@@ -1,4 +1,4 @@
-import { WEB_HTTP_CONTEXT, WebHttpRequestOptions } from '@am92/web-http'
+import { WEB_HTTP_CONTEXT, type WebHttpRequestOptions } from '@am92/web-http'
 
 import { loginServiceName, loginTraceActions } from '../Actions'
 

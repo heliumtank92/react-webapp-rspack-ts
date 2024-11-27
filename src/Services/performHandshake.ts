@@ -1,18 +1,16 @@
-import WebHttp, {
-  WEB_HTTP_CONTEXT,
-  WebHttpRequestOptions
-} from '@am92/web-http'
+import type WebHttp from '@am92/web-http'
+import { WEB_HTTP_CONTEXT, type WebHttpRequestOptions } from '@am92/web-http'
 
 import { HANDSHAKE_ENABLED_HTTP } from '~/src/Configurations/WebHttp'
 
 const performHandshake = async () => {
   const promises = HANDSHAKE_ENABLED_HTTP.map(handshake)
   const responses = await Promise.allSettled(promises)
-  responses.forEach(response => {
+  for (const response of responses) {
     if (response.status === 'rejected') {
       throw response.reason
     }
-  })
+  }
 }
 
 const handshake = async (webHttp: WebHttp) => {

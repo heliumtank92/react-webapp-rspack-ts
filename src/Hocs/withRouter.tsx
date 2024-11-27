@@ -1,18 +1,18 @@
-import React from 'react'
+import type React from 'react'
 import {
-  Location,
-  NavigateFunction,
-  NavigateOptions,
-  Params,
-  SetURLSearchParams,
-  To,
+  type Location,
+  type NavigateFunction,
+  type NavigateOptions,
+  type Params,
+  type SetURLSearchParams,
+  type To,
   useLocation,
   useNavigate,
   useParams,
   useSearchParams
 } from 'react-router-dom'
-import { Subtract } from 'utility-types'
-import { AppRouteItem } from '../Constants/APP_ROUTES'
+import type { Subtract } from 'utility-types'
+import type { AppRouteItem } from '../Constants/APP_ROUTES'
 
 /**
  * Basic Interface to extend in components wrapping the below HOC.

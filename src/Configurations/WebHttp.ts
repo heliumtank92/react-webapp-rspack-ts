@@ -1,7 +1,7 @@
 import WebHttp, {
   WEB_HTTP_CONTEXT,
-  WebHttpAxiosConfig,
-  WebHttpConfig
+  type WebHttpAxiosConfig,
+  type WebHttpConfig
 } from '@am92/web-http'
 
 import {

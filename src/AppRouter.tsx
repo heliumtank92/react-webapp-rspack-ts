@@ -1,14 +1,13 @@
-import React, { Suspense } from 'react'
+import type React from 'react'
+import { Suspense } from 'react'
 import { RouterProvider } from 'react-router-dom'
 
-import getAppRouter from './Configurations/getAppRouter'
 import Loader from './Components/Loader'
+import getAppRouter from './Configurations/getAppRouter'
 
 let router: ReturnType<typeof getAppRouter> | undefined
 
-export interface IAppRouterProps {}
-
-const AppRouter: React.FC<IAppRouterProps> = () => {
+const AppRouter: React.FC = () => {
   if (!router) {
     router = getAppRouter()
   }
