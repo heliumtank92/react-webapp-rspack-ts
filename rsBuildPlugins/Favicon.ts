@@ -74,7 +74,7 @@ export const pluginFavicon = (
 
           const versionFileContent = JSON.stringify(
             {
-              name: options?.appName || '',
+              name: options?.appShortName || options?.appName || '',
               description: options?.appDescription || '',
               version: options?.version || '',
               buildAt: new Date().getTime(),

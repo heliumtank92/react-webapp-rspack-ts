@@ -1,5 +1,6 @@
 import { GenerateSW } from '@aaroon/workbox-rspack-plugin'
 import { type RsbuildConfig, defineConfig, loadEnv } from '@rsbuild/core'
+import { pluginBasicSsl } from '@rsbuild/plugin-basic-ssl'
 import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill'
 import { pluginReact } from '@rsbuild/plugin-react'
 // import { pluginImageCompress } from '@rsbuild/plugin-image-compress'
@@ -30,6 +31,10 @@ export default defineConfig(({ env, command, envMode, meta }) => {
       // pluginImageCompress(),
       pluginRenameAssetsAndReferences()
     )
+
+    if (process.env.HTTPS === 'true') {
+      rsBuildPlugins.push(pluginBasicSsl())
+    }
   }
 
   const config: RsbuildConfig = {
@@ -38,9 +43,9 @@ export default defineConfig(({ env, command, envMode, meta }) => {
       progressBar: true
     },
     server: {
-      // headers: {
-      //   'cache-control': 'max-age=31536000, s-maxage=31536000'
-      // }
+      headers: {
+        'cache-control': 'max-age=31536000, s-maxage=31536000'
+      }
     },
     source: {
       define: publicVars,
@@ -71,6 +76,7 @@ export default defineConfig(({ env, command, envMode, meta }) => {
       templateParameters: parsed,
       title: manifestConfig.appShortName || manifestConfig.appName,
       meta: {
+        description: manifestConfig.appDescription || '',
         'og:title': manifestConfig.appShortName || manifestConfig.appName || '',
         'og:description': manifestConfig.appDescription || '',
         'og:type': 'website',

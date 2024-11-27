@@ -1,5 +1,5 @@
 [production]
-fully supports es6-module
+defaults and fully supports es6-module
 
 [development]
 last 2 version
