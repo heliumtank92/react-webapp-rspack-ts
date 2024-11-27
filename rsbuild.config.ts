@@ -18,6 +18,8 @@ export default defineConfig(({ env, command, envMode, meta }) => {
     mode: envMode || process.env.NODE_ENV || 'development'
   })
 
+  console.log('test')
+
   const rsBuildPlugins: RsbuildConfig['plugins'] = [
     pluginReact(),
     pluginNodePolyfill()
