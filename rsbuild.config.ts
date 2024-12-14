@@ -3,6 +3,7 @@ import { type RsbuildConfig, defineConfig, loadEnv } from '@rsbuild/core'
 import { pluginBasicSsl } from '@rsbuild/plugin-basic-ssl'
 import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill'
 import { pluginReact } from '@rsbuild/plugin-react'
+import { pluginSass } from '@rsbuild/plugin-sass'
 // import { pluginImageCompress } from '@rsbuild/plugin-image-compress'
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin'
 import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser'
@@ -11,18 +12,17 @@ import manifestConfig from './manifest.config'
 import { pluginFavicon } from './rsBuildPlugins/Favicon'
 import { pluginRenameAssetsAndReferences } from './rsBuildPlugins/pluginRenameAssetsAndReferences'
 
-export default defineConfig(({ env, command, envMode, meta }) => {
+export default defineConfig(({ envMode }) => {
   const isProduction = envMode === 'production'
   const { publicVars, parsed } = loadEnv({
     prefixes: ['APP_', 'AS_', 'npm_package_'],
     mode: envMode || process.env.NODE_ENV || 'development'
   })
 
-  console.log('test')
-
   const rsBuildPlugins: RsbuildConfig['plugins'] = [
     pluginReact(),
-    pluginNodePolyfill()
+    pluginNodePolyfill(),
+    pluginSass()
   ]
 
   if (isProduction) {
@@ -117,7 +117,7 @@ export default defineConfig(({ env, command, envMode, meta }) => {
       preconnect: process.env.PRECONNECT?.split(',')
     },
     tools: {
-      rspack(config, { appendPlugins }) {
+      rspack(_config, { appendPlugins }) {
         // Only register the plugin when RSDOCTOR is true, as the plugin will increase the build time.
         if (process.env.RSDOCTOR) {
           appendPlugins(

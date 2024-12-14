@@ -41,6 +41,7 @@
     "@rsbuild/plugin-image-compress": "^1.0.2",
     "@rsbuild/plugin-node-polyfill": "^1.2.0",
     "@rsbuild/plugin-react": "^1.0.6",
+    "@rsbuild/plugin-sass": "^1.1.1",
     "@rsdoctor/rspack-plugin": "^0.4.9",
     "@rspack/core": "^1.1.3",
     "@types/react": "^18.3.12",
