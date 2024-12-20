@@ -45,9 +45,11 @@ export default defineConfig(({ envMode }) => {
       progressBar: true
     },
     server: {
-      headers: {
-        'cache-control': 'max-age=31536000, s-maxage=31536000'
-      }
+      headers: isProduction
+        ? {
+            'cache-control': 'max-age=31536000, s-maxage=31536000'
+          }
+        : {}
     },
     source: {
       define: publicVars,
@@ -129,6 +131,7 @@ export default defineConfig(({ envMode }) => {
           )
         }
 
+        // TODO: Optional
         if (isProduction) {
           appendPlugins(new GenerateSW({ swDest: './sw.js' }))
         }
