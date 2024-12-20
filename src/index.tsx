@@ -2,6 +2,7 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 
 import App from './App'
+import AppErrorBoundary from './AppErrorBoundary'
 import { AppStoreProvider } from './Configurations/AppStore'
 
 const container = document.getElementById('root')
@@ -9,7 +10,9 @@ if (container) {
   const root = createRoot(container)
   root.render(
     <React.StrictMode>
-      <AppStoreProvider AppComponent={App} />
+      <AppErrorBoundary>
+        <AppStoreProvider AppComponent={App} />
+      </AppErrorBoundary>
     </React.StrictMode>
   )
 
