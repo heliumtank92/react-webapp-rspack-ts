@@ -97,7 +97,7 @@ export const pluginFavicon = (
         return { headTags: newHeadTags, bodyTags }
       })
     } catch (error: any) {
-      console.log(error.message) // Error description e.g. "An unknown error has occurred"
+      console.log(error?.message) // Error description e.g. "An unknown error has occurred"
     }
   }
 })
