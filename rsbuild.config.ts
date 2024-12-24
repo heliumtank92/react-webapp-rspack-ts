@@ -108,15 +108,16 @@ export default defineConfig(({ envMode }) => {
       removeConsole: isProduction,
       removeMomentLocale: true,
       preload:
-        (process.env.PRELOAD_SCRIPTS && {
+        (process.env.PRELOAD && {
           type: 'all-assets',
-          include: process.env.PRELOAD_SCRIPTS?.split(',').map(
-            scriptName => new RegExp(`/[\\/]${scriptName}\.\w+\.js$/`)
-          )
+          include: process.env.PRELOAD?.split(',').map(fileName => {
+            const [name, ext] = fileName.split('.')
+            return new RegExp(`^.*?\/${name}.*.${ext}$`)
+          })
         }) ||
         undefined,
       dnsPrefetch: process.env.DNS_PREFETCH?.split(','),
-      preconnect: process.env.PRECONNECT?.split(',')
+      preconnect: process.env.PRE_CONNECT?.split(',')
     },
     tools: {
       rspack(_config, { appendPlugins }) {
