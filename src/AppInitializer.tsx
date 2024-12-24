@@ -1,16 +1,16 @@
 import React, { Suspense } from 'react'
 
-import Loader from './Components/Loader'
+import Loader from '~/src/Components/Loader'
 
 import { WEB_HTTP_CONTEXT } from '@am92/web-http'
 import { useSelector } from 'react-redux'
-import AppRouter from './AppRouter'
-import { asHttp } from './Configurations/WebHttp'
+import AppRouter from '~/src/AppRouter'
+import { asHttp } from '~/src/Configurations/WebHttp'
 import {
   getAccessTokenSelector,
   getRefreshTokenSelector
-} from './Redux/Auth/Selectors'
-import performHandshake from './Services/performHandshake'
+} from '~/src/Redux/Auth/Selectors'
+import performHandshake from '~/src/Services/performHandshake'
 
 const AppInitializer: React.FC = () => {
   const accessToken = useSelector(getAccessTokenSelector)

@@ -1,20 +1,25 @@
 import type React from 'react'
-import { Suspense } from 'react'
+import { Suspense, useId } from 'react'
 import { RouterProvider } from 'react-router-dom'
 
-import Loader from './Components/Loader'
-import getAppRouter from './Configurations/getAppRouter'
+import Loader from '~/src/Components/Loader'
+import getAppRouter from '~/src/Configurations/getAppRouter'
 
 let router: ReturnType<typeof getAppRouter> | undefined
+let key: string | undefined
 
 const AppRouter: React.FC = () => {
   if (!router) {
     router = getAppRouter()
+
+    if (!key) {
+      key = useId()
+    }
   }
 
   return (
     <Suspense fallback={<Loader />}>
-      <RouterProvider router={router} />
+      <RouterProvider router={router} key={key} />
     </Suspense>
   )
 }

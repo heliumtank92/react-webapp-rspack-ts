@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs } from 'react-router'
 
 export async function loader(_loaderArgs: LoaderFunctionArgs) {
-  return {}
+  return { message: 'Hello, world!' }
 }

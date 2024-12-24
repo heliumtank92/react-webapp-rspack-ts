@@ -5,14 +5,12 @@ import HOME_IMAGE from '~/src/Assets/HOME_IMAGE'
 type IHomePageProps = Record<string, never>
 
 const HomePage: React.FunctionComponent<IHomePageProps> = () => {
-  console.log('home', HOME_IMAGE)
   return (
     <Stack
       direction='column'
       justifyContent='center'
       alignItems='center'
-      height='100vh'
-      width='100vw'
+      height='var(--100vh)'
     >
       <picture>
         {HOME_IMAGE.map(

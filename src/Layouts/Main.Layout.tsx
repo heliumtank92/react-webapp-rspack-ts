@@ -1,8 +1,10 @@
-import { PureComponent } from 'react'
-import { Outlet } from 'react-router-dom'
+import { FunctionComponent } from 'react'
+import { Outlet } from 'react-router'
 
-export default class MainLayout extends PureComponent {
-  render() {
-    return <Outlet />
-  }
+interface IMainLayoutProps {}
+
+const MainLayout: FunctionComponent<IMainLayoutProps> = _props => {
+  return <Outlet />
 }
+
+export default MainLayout

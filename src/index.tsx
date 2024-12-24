@@ -1,9 +1,9 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 
-import App from './App'
-import AppErrorBoundary from './AppErrorBoundary'
-import { AppStoreProvider } from './Configurations/AppStore'
+import App from '~/src/App'
+import AppErrorBoundary from '~/src/AppErrorBoundary'
+import { AppStoreProvider } from '~/src/Configurations/AppStore'
 
 const container = document.getElementById('root')
 if (container) {
@@ -19,7 +19,8 @@ if (container) {
   if (
     'serviceWorker' in navigator &&
     process.env.NODE_ENV === 'production' &&
-    location.protocol === 'https:'
+    location.protocol === 'https:' &&
+    location.hostname !== 'localhost'
   ) {
     console.log('sw listener')
     window.addEventListener('load', () => {

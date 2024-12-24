@@ -1,8 +1,8 @@
 import { Component } from 'react'
 // @ts-ignore
 import supportedBrowsers from '~/public/static/js/supportedBrowsers.js'
-import SomethingWentWrongPage from './Pages/SomethingWentWrong/SomethingWentWrong.Page'
-import UnsupportedBrowsersPage from './Pages/UnsupportedBrowsers/UnsupportedBrowsers.Page'
+import SomethingWentWrongPage from '~/src/Pages/SomethingWentWrong/SomethingWentWrong.Page'
+import UnsupportedBrowsersPage from '~/src/Pages/UnsupportedBrowsers/UnsupportedBrowsers.Page'
 
 export interface IAppErrorBoundaryProps {
   children: React.ReactElement
