@@ -1,4 +1,4 @@
-var supportedBrowsers = require('./supportedBrowsers')(function () {
+var supportedBrowsers = require('./supportedBrowsers.js')(function () {
   try {
     // Test for native `import` statement support
     new Function('import("")')

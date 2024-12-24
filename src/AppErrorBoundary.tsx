@@ -1,6 +1,8 @@
 import { Component } from 'react'
 // @ts-ignore
 import supportedBrowsers from '~/public/static/js/supportedBrowsers.js'
+import SomethingWentWrongPage from './Pages/SomethingWentWrong/SomethingWentWrong.Page'
+import UnsupportedBrowsersPage from './Pages/UnsupportedBrowsers/UnsupportedBrowsers.Page'
 
 export interface IAppErrorBoundaryProps {
   children: React.ReactElement
@@ -20,8 +22,8 @@ const getErrorComponentCode = (): TErrorComponentCode => {
 
 const ERR_COMPONENT_CODE_MAP: Record<TErrorComponentCode, React.ComponentType> =
   {
-    BROWSER_NOT_SUPPORTED: () => <h1>BROWSER_NOT_SUPPORTED</h1>,
-    SOMETHING_WENT_WRONG: () => <h1>SOMETHING_WENT_WRONG</h1>
+    BROWSER_NOT_SUPPORTED: UnsupportedBrowsersPage,
+    SOMETHING_WENT_WRONG: SomethingWentWrongPage
   }
 
 export default class AppErrorBoundary extends Component<
