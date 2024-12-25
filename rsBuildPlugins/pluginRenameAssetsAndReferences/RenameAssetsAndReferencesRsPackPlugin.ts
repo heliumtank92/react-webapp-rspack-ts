@@ -1,3 +1,4 @@
+import url from 'node:url'
 import type { Compilation, Compiler, WebpackPluginInstance } from '@rspack/core'
 
 const EXTENSIONS = ['webp', 'avif']
@@ -18,13 +19,17 @@ class RenameAssetsAndReferencesRsPackPlugin implements WebpackPluginInstance {
           const assetName = asset.name
           const assetSourceName = asset.info.sourceFilename
 
-          const newExtension = assetSourceName?.split('?as=')[1] || ''
-          if (EXTENSIONS.includes(newExtension)) {
-            const newAssetName = assetName.replace(
-              /\.(png|jpe?g|gif)$/i,
-              `.${newExtension}`
-            )
-            renamedAssets.push({ oldName: assetName, newName: newAssetName })
+          if (assetSourceName) {
+            const { query } = url.parse(assetSourceName, true)
+
+            const newExtension = (query.as as string) || ''
+            if (EXTENSIONS.includes(newExtension)) {
+              const newAssetName = assetName.replace(
+                /\.(png|jpe?g|gif)$/i,
+                `.${newExtension}`
+              )
+              renamedAssets.push({ oldName: assetName, newName: newAssetName })
+            }
           }
         }
 
