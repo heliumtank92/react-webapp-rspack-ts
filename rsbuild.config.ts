@@ -28,7 +28,7 @@ export default defineConfig(({ envMode }) => {
 
   if (isProduction) {
     rsBuildPlugins.push(
-      pluginAssetsRetry(),
+      pluginAssetsRetry({ inlineScript: false }),
       pluginHtmlMinifierTerser(),
       pluginFavicon('./public/favicon.svg', manifestConfig),
       // Issues with the image imageminimizer webpack plugin
@@ -40,6 +40,10 @@ export default defineConfig(({ envMode }) => {
       rsBuildPlugins.push(pluginBasicSsl())
     }
   }
+
+  // Split and filter blank values
+  const dnsPrefetch = process.env.DNS_PREFETCH?.split(',').filter(n => n)
+  const preConnect = process.env.PRE_CONNECT?.split(',').filter(n => n)
 
   const config: RsbuildConfig = {
     dev: {
@@ -118,8 +122,8 @@ export default defineConfig(({ envMode }) => {
           })
         }) ||
         undefined,
-      dnsPrefetch: process.env.DNS_PREFETCH?.split(','),
-      preconnect: process.env.PRE_CONNECT?.split(',')
+      dnsPrefetch: (dnsPrefetch?.length && dnsPrefetch) || undefined,
+      preconnect: (preConnect?.length && preConnect) || undefined
     },
     tools: {
       rspack(_config, { appendPlugins }) {
@@ -142,5 +146,6 @@ export default defineConfig(({ envMode }) => {
     }
   }
 
+  console.log(config.performance)
   return config
 })
