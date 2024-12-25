@@ -12,7 +12,7 @@
     "doctor": "RSDOCTOR=true npm run build",
     "format": "biome format --write",
     "lint": "npm run tsc:lint && npm run biome:lint",
-    "preview": "rsbuild preview",
+    "preview": "rsbuild preview --open",
     "supportedBrowsers": "echo \"module.exports = $(browserslist-useragent-regexp --allowHigherVersions);\" > ./public/static/js/supportedBrowsers.js",
     "tsc:lint": "tsc"
   },
