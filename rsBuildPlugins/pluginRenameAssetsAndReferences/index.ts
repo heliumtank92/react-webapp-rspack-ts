@@ -40,7 +40,40 @@ export const pluginRenameAssetsAndReferences = (): RsbuildPlugin => ({
                     }
                   }
                 }
-              ]
+              ],
+              minimizer: {
+                implementation: ImageMinimizerPlugin.sharpMinify,
+                options: {
+                  encodeOptions: {
+                    jpeg: {
+                      quality: 85, // Balances quality and file size for web use.
+                      progressive: true, // Enables progressive JPEG for faster web loading.
+                      chromaSubsampling: '4:4:4', // Ensures better color quality by avoiding color subsampling.
+                      optimizeCoding: true, // Optimizes Huffman coding for smaller file sizes.
+                      mozjpeg: true // Uses the MozJPEG encoder for superior compression efficiency.
+                    },
+                    png: {
+                      compressionLevel: 9, // Maximum compression level for smaller file size.
+                      quality: 100, // Ensures the highest quality output.
+                      adaptiveFiltering: true, // Improves the quality of gradients in the image.
+                      palette: true, // Reduces file size by optimizing colors while preserving appearance.
+                      progressive: true // Enables progressive rendering for faster loading in browsers.
+                    },
+                    webp: {
+                      quality: 85, // High visual quality with good compression.
+                      lossless: true, // Use lossy compression for smaller file size (set to true for lossless WebP).
+                      alphaQuality: 100, // Maintains maximum quality for transparency.
+                      effort: 6 // Balances encoding speed and compression efficiency (1 is fastest, 6 is default, 9 is slowest).
+                    },
+                    avif: {
+                      quality: 85, // High visual quality with good compression.
+                      lossless: true, // Use lossy compression for smaller file sizes (set to true for lossless AVIF).
+                      effort: 6, // Balances encoding speed and compression efficiency (1 is fastest, 9 is slowest).
+                      chromaSubsampling: '4:4:4' // Ensures better color fidelity, especially for text and fine details.
+                    }
+                  }
+                }
+              }
             }
           }
         ]
