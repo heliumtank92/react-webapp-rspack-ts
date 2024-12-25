@@ -13,12 +13,30 @@ import manifestConfig from './manifest.config'
 import { pluginFavicon } from './rsBuildPlugins/Favicon'
 import { pluginRenameAssetsAndReferences } from './rsBuildPlugins/pluginRenameAssetsAndReferences'
 
-export default defineConfig(({ envMode }) => {
-  const isProduction = envMode === 'production'
-  const { publicVars, parsed } = loadEnv({
+export default defineConfig(({ envMode, env }) => {
+  const isProduction = env === 'production'
+  const { publicVars, parsed, filePaths } = loadEnv({
     prefixes: ['APP_', 'AS_', 'npm_package_'],
     mode: envMode || process.env.NODE_ENV || 'development'
   })
+
+  if (!filePaths.length) {
+    console.warn(`
+===========================================================
+⚠️  Environment Configuration Warning
+===========================================================
+
+No environment configuration files were found matching the following names:
+  1. .env
+  2. .env.local
+  3. .env.${envMode}
+  4. .env.${envMode}.local
+
+💡 Please ensure you are running the script with the correct --env-mode.
+===========================================================
+`)
+    process.exit(1)
+  }
 
   const rsBuildPlugins: RsbuildConfig['plugins'] = [
     pluginReact(),
@@ -146,6 +164,5 @@ export default defineConfig(({ envMode }) => {
     }
   }
 
-  console.log(config.performance)
   return config
 })
