@@ -1,5 +1,6 @@
 import { GenerateSW } from '@aaroon/workbox-rspack-plugin'
 import { type RsbuildConfig, defineConfig, loadEnv } from '@rsbuild/core'
+import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry'
 import { pluginBasicSsl } from '@rsbuild/plugin-basic-ssl'
 import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill'
 import { pluginReact } from '@rsbuild/plugin-react'
@@ -27,6 +28,7 @@ export default defineConfig(({ envMode }) => {
 
   if (isProduction) {
     rsBuildPlugins.push(
+      pluginAssetsRetry(),
       pluginHtmlMinifierTerser(),
       pluginFavicon('./public/favicon.svg', manifestConfig),
       // Issues with the image imageminimizer webpack plugin
