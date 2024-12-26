@@ -15,7 +15,6 @@ const routeObj: RouteObject[] = [
       () =>
         import(
           /* webpackChunkName: "MainLayout" */
-          /* webpackPreload: 0 */
           '~/src/Layouts/Main.Layout'
         )
     ),
@@ -59,7 +58,6 @@ const routeObj: RouteObject[] = [
       () =>
         import(
           /* webpackChunkName: "ErrorLayout" */
-          /* webpackPreload: 0 */
           '~/src/Layouts/Error.Layout'
         )
     ),

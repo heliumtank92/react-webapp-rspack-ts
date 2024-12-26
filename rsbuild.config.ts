@@ -46,7 +46,7 @@ No environment configuration files were found matching the following names:
 
   if (isProduction) {
     rsBuildPlugins.push(
-      pluginAssetsRetry({ inlineScript: false }),
+      pluginAssetsRetry(),
       pluginHtmlMinifierTerser(),
       pluginFavicon('./public/favicon.svg', manifestConfig),
       // Issues with the image imageminimizer webpack plugin
