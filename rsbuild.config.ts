@@ -14,7 +14,7 @@ import { pluginRenameAssetsAndReferences } from './rsBuildPlugins/pluginRenameAs
 
 export default defineConfig(({ envMode, env }) => {
   const isProduction = env === 'production'
-  const pwaEnabled = process.env.PWA_ENABLE_SW === 'true'
+  const pwaEnabled = process.env.APP_PWA_ENABLE === 'true'
 
   const { publicVars, parsed, filePaths } = loadEnv({
     prefixes: ['APP_', 'AS_', 'npm_package_'],

@@ -25,7 +25,7 @@ let manifestConfig: IPluginFaviconOptions = {
   manifestMaskable: false // Maskable source image(s) for manifest.json. "true" to use default source. More information at https://web.dev/maskable-icon/. `boolean`, `string`, `buffer` or array of `string`
 }
 
-const pwaEnabled = process.env.PWA_ENABLE_SW === 'true'
+const pwaEnabled = process.env.APP_PWA_ENABLE === 'true'
 
 if (!pwaEnabled) {
   const pwaDisabledConfig = {
