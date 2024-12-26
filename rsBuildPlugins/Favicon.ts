@@ -7,7 +7,7 @@ import { type FaviconOptions, favicons } from 'favicons'
 import { parseDocument } from 'htmlparser2'
 
 export interface IPluginFaviconOptions
-  extends Omit<FaviconOptions, 'path' | 'cacheBustingQueryParam' | 'icons'> {}
+  extends Omit<FaviconOptions, 'path' | 'cacheBustingQueryParam'> {}
 
 export const pluginFavicon = (
   source: string | Buffer,

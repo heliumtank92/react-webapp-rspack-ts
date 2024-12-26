@@ -5,7 +5,6 @@ import { pluginBasicSsl } from '@rsbuild/plugin-basic-ssl'
 import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill'
 import { pluginReact } from '@rsbuild/plugin-react'
 import { pluginSass } from '@rsbuild/plugin-sass'
-// import { pluginImageCompress } from '@rsbuild/plugin-image-compress'
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin'
 import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser'
 
@@ -15,6 +14,8 @@ import { pluginRenameAssetsAndReferences } from './rsBuildPlugins/pluginRenameAs
 
 export default defineConfig(({ envMode, env }) => {
   const isProduction = env === 'production'
+  const pwaEnabled = process.env.PWA_ENABLE_SW === 'true'
+
   const { publicVars, parsed, filePaths } = loadEnv({
     prefixes: ['APP_', 'AS_', 'npm_package_'],
     mode: envMode || process.env.NODE_ENV || 'development'
@@ -30,7 +31,7 @@ No environment configuration files were found matching the following names:
   1. .env
   2. .env.local
   3. .env.${envMode}
-  4. .env.${envMode}.local
+  4. .env.${envMode}.local (Preferred)
 
 💡 Please ensure you are running the script with the correct --env-mode.
 ===========================================================
@@ -49,8 +50,6 @@ No environment configuration files were found matching the following names:
       pluginAssetsRetry(),
       pluginHtmlMinifierTerser(),
       pluginFavicon('./public/favicon.svg', manifestConfig),
-      // Issues with the image imageminimizer webpack plugin
-      // pluginImageCompress(),
       pluginRenameAssetsAndReferences()
     )
 
@@ -130,7 +129,7 @@ No environment configuration files were found matching the following names:
     },
     performance: {
       removeConsole: isProduction,
-      removeMomentLocale: true,
+      removeMomentLocale: isProduction,
       preload:
         (process.env.PRELOAD && {
           type: 'all-assets',
@@ -157,7 +156,7 @@ No environment configuration files were found matching the following names:
         }
 
         // TODO: Optional
-        if (isProduction) {
+        if (isProduction && pwaEnabled) {
           appendPlugins(new GenerateSW({ swDest: './sw.js' }))
         }
       }

@@ -2,7 +2,7 @@ import type { IPluginFaviconOptions } from './rsBuildPlugins/Favicon'
 
 const version = process.env.npm_package_version
 
-const manifestConfig: IPluginFaviconOptions = {
+let manifestConfig: IPluginFaviconOptions = {
   appName: 'RsBuild Application', // Your application's name. `string`
   appShortName: 'RsBuild App', // Your application's short_name. `string`. Optional. If not set, appName will be used
   appDescription: 'RsBuild App Boilerplate', // Your application's description. `string`
@@ -23,6 +23,34 @@ const manifestConfig: IPluginFaviconOptions = {
   pixel_art: false, // Keeps pixels "sharp" when scaling up, for pixel art.  Only supported in offline mode.
   loadManifestWithCredentials: false, // Browsers don't send cookies when fetching a manifest, enable this to fix that. `boolean`
   manifestMaskable: false // Maskable source image(s) for manifest.json. "true" to use default source. More information at https://web.dev/maskable-icon/. `boolean`, `string`, `buffer` or array of `string`
+}
+
+const pwaEnabled = process.env.PWA_ENABLE_SW === 'true'
+
+if (!pwaEnabled) {
+  const pwaDisabledConfig = {
+    icons: {
+      // Platform Options:
+      // - offset - offset in percentage
+      // - background:
+      //   * false - use default
+      //   * true - force use default, e.g. set background for Android icons
+      //   * color - set background for the specified icons
+      //
+      android: false, // Create Android homescreen icon. `boolean` or `{ offset, background }` or an array of sources
+      appleIcon: false, // Create Apple touch icons. `boolean` or `{ offset, background }` or an array of sources
+      appleStartup: false, // Create Apple startup images. `boolean` or `{ offset, background }` or an array of sources
+      favicons: true, // Create regular favicons. `boolean` or `{ offset, background }` or an array of sources
+      windows: false, // Create Windows 8 tile icons. `boolean` or `{ offset, background }` or an array of sources
+      yandex: false // Create Yandex browser icon. `boolean` or `{ offset, background }` or an array of sources
+    },
+    shortcuts: []
+  }
+
+  manifestConfig = {
+    ...manifestConfig,
+    ...pwaDisabledConfig
+  }
 }
 
 export default manifestConfig
