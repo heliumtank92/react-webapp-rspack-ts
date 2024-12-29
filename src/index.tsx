@@ -19,8 +19,6 @@ if (container) {
   if (
     'serviceWorker' in navigator &&
     process.env.NODE_ENV === 'production' &&
-    location.protocol === 'https:' &&
-    location.hostname !== 'localhost' &&
     process.env.APP_PWA_ENABLE === 'true'
   ) {
     console.log('sw listener')

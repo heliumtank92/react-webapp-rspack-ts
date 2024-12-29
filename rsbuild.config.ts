@@ -6,6 +6,7 @@ import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill'
 import { pluginReact } from '@rsbuild/plugin-react'
 import { pluginSass } from '@rsbuild/plugin-sass'
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin'
+import { pluginEjs } from 'rsbuild-plugin-ejs'
 import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser'
 
 import manifestConfig from './manifest.config'
@@ -42,6 +43,7 @@ No environment configuration files were found matching the following names:
   const rsBuildPlugins: RsbuildConfig['plugins'] = [
     pluginReact(),
     pluginNodePolyfill(),
+    pluginEjs(),
     pluginSass()
   ]
 
@@ -72,7 +74,10 @@ No environment configuration files were found matching the following names:
         ? {
             'cache-control': 'max-age=31536000, s-maxage=31536000'
           }
-        : {}
+        : {},
+      publicDir: {
+        copyOnBuild: false
+      }
     },
     source: {
       define: publicVars,
@@ -94,12 +99,21 @@ No environment configuration files were found matching the following names:
           : // Use a more performant source map format for development
             'cheap-module-source-map',
         css: false
-      }
+      },
+      copy: [
+        {
+          from: './public',
+          to: './',
+          globOptions: {
+            ignore: ['**/favicon.svg', '**/index.ejs']
+          }
+        }
+      ]
     },
 
     plugins: rsBuildPlugins,
     html: {
-      template: './public/index.html',
+      template: './public/index.ejs',
       templateParameters: parsed,
       title: manifestConfig.appShortName || manifestConfig.appName,
       meta: {
@@ -157,7 +171,14 @@ No environment configuration files were found matching the following names:
 
         // TODO: Optional
         if (isProduction && pwaEnabled) {
-          appendPlugins(new GenerateSW({ swDest: './sw.js' }))
+          appendPlugins(
+            new GenerateSW({
+              swDest: './sw.js',
+              cleanupOutdatedCaches: true,
+              inlineWorkboxRuntime: true,
+              exclude: [/\.html$/]
+            })
+          )
         }
       }
     }
