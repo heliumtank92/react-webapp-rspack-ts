@@ -1,8 +1,12 @@
-import { Typography } from '@mui/material'
+import { DsTypography } from '@am92/react-design-system'
 import { FC } from 'react'
 
 const UnsupportedBrowsersPage: FC = () => {
-  return <Typography variant='h2'>Unsupported Browsers Page</Typography>
+  return (
+    <DsTypography variant='displayBoldLarge'>
+      Unsupported Browsers Page
+    </DsTypography>
+  )
 }
 
 export default UnsupportedBrowsersPage

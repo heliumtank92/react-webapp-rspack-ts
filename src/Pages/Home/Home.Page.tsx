@@ -1,37 +1,56 @@
-import { Stack, Typography } from '@mui/material'
+import {
+  DsImage,
+  DsRemixIcon,
+  DsStack,
+  DsToggle,
+  DsTypography
+} from '@am92/react-design-system'
 import { FC } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import HOME_IMAGE from '~/src/Assets/HOME_IMAGE'
+import { setThemeSchemeAction } from '~/src/Redux/Theme/Actions'
+import { getThemeReducer } from '~/src/Redux/Theme/Selectors'
 
 const HomePage: FC = () => {
+  const dispatch = useDispatch()
+  const { scheme } = useSelector(getThemeReducer)
+
+  const handleSchemeChange = (_name: string, value: boolean) => {
+    const newScheme = value ? 'dark' : 'light'
+    dispatch(setThemeSchemeAction(newScheme))
+  }
+
   return (
-    <Stack
-      direction='column'
-      justifyContent='center'
-      alignItems='center'
-      height='var(--100vh)'
+    <DsStack
+      justifyContent={'center'}
+      alignItems={'center'}
+      direction={'column'}
+      height={'var(--100vh)'}
+      sx={{
+        px: 'var(--ds-spacing-warm)'
+      }}
     >
-      <picture>
-        {HOME_IMAGE.map(
-          (image, index) =>
-            (index !== HOME_IMAGE.length - 1 && (
-              <source
-                key={`home-${index}`}
-                srcSet={image.src}
-                type={image.as}
-              />
-            )) || (
-              <img
-                key={index}
-                src={image.src}
-                alt={image.alt}
-                width={335}
-                height={260}
-              />
-            )
-        )}
-      </picture>
-      <Typography variant='h2'>Home Page1</Typography>
-    </Stack>
+      <DsImage
+        srcSet={HOME_IMAGE}
+        style={{ width: '100%', height: 'auto' }}
+        WrapperProps={{ sx: { height: 'auto' } }}
+      />
+      <DsTypography variant='displayBoldLarge'>Home Page</DsTypography>
+      <DsStack
+        alignItems={'center'}
+        direction={'row'}
+        sx={{
+          gap: 'var(--ds-spacing-glacial)'
+        }}
+      >
+        <DsToggle
+          name='Dark Mode'
+          value={scheme === 'dark'}
+          onChange={handleSchemeChange}
+        />
+        <DsRemixIcon className='ri-contrast-2-line' />
+      </DsStack>
+    </DsStack>
   )
 }
 
