@@ -1,10 +1,8 @@
 import { Stack, Typography } from '@mui/material'
-import type React from 'react'
+import { FC } from 'react'
 import HOME_IMAGE from '~/src/Assets/HOME_IMAGE'
 
-type IHomePageProps = Record<string, never>
-
-const HomePage: React.FunctionComponent<IHomePageProps> = () => {
+const HomePage: FC = () => {
   return (
     <Stack
       direction='column'

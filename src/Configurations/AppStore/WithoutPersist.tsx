@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { FC } from 'react'
 import { Provider } from 'react-redux'
 
 import reducers from '~/src/Redux/Reducers'
@@ -8,12 +9,14 @@ export const AppStore = configureStore({
   devTools: process.env.NODE_ENV !== 'production'
 })
 
-export type TAppStore = ReturnType<typeof AppStore.getState>
+const { dispatch: appDispatch, getState: getAppStore } = AppStore
 
-export type TAppDispatch = typeof AppStore.dispatch
+export type TAppStore = ReturnType<typeof getAppStore>
+export type TAppDispatch = typeof appDispatch
+export { appDispatch, getAppStore }
 
-export const AppStoreProvider: React.FC<{
-  AppComponent: React.FunctionComponent<{ persisted: boolean }>
+export const AppStoreProvider: FC<{
+  AppComponent: FC<{ persisted: boolean }>
 }> = ({ AppComponent }) => (
   <Provider store={AppStore}>
     <AppComponent persisted />

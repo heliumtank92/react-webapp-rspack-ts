@@ -1,11 +1,7 @@
 import { Typography } from '@mui/material'
-import * as React from 'react'
+import { FC } from 'react'
 
-interface ISomethingWentWrongPageProps {}
-
-const SomethingWentWrongPage: React.FunctionComponent<
-  ISomethingWentWrongPageProps
-> = _props => {
+const SomethingWentWrongPage: FC = () => {
   return <Typography variant='h2'>Something WentWrong Page</Typography>
 }
 

@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material'
-import type React from 'react'
+import { FC } from 'react'
 
-const NotFoundPage: React.FC = () => {
+const NotFoundPage: FC = () => {
   return <Typography variant='h2'>Not Found</Typography>
 }
 

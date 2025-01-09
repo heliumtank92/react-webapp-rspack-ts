@@ -1,9 +1,7 @@
-import { FunctionComponent } from 'react'
+import { FC } from 'react'
 import { Outlet } from 'react-router'
 
-interface IMainLayoutProps {}
-
-const MainLayout: FunctionComponent<IMainLayoutProps> = _props => {
+const MainLayout: FC = () => {
   return <Outlet />
 }
 

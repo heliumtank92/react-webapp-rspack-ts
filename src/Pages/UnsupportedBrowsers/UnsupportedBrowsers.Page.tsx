@@ -1,11 +1,7 @@
 import { Typography } from '@mui/material'
-import * as React from 'react'
+import { FC } from 'react'
 
-interface IUnsupportedBrowsersPageProps {}
-
-const UnsupportedBrowsersPage: React.FunctionComponent<
-  IUnsupportedBrowsersPageProps
-> = _props => {
+const UnsupportedBrowsersPage: FC = () => {
   return <Typography variant='h2'>Unsupported Browsers Page</Typography>
 }
 

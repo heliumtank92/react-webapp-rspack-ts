@@ -7,6 +7,7 @@ import UnsupportedBrowsersPage from '~/src/Pages/UnsupportedBrowsers/Unsupported
 export interface IAppErrorBoundaryProps {
   children: React.ReactElement
 }
+
 type TErrorComponentCode = 'SOMETHING_WENT_WRONG' | 'BROWSER_NOT_SUPPORTED'
 
 export interface IAppErrorBoundaryState {

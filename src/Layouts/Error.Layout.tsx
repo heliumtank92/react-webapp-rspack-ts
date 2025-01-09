@@ -1,10 +1,8 @@
 import { Stack } from '@mui/material'
-import { FunctionComponent } from 'react'
+import { FC } from 'react'
 import { Outlet } from 'react-router'
 
-interface IErrorLayoutProps {}
-
-const ErrorLayout: FunctionComponent<IErrorLayoutProps> = _props => {
+const ErrorLayout: FC = () => {
   return (
     <Stack
       justifyContent='center'

@@ -1,5 +1,3 @@
-import { LoaderFunctionArgs } from 'react-router'
-
-export async function loader(_loaderArgs: LoaderFunctionArgs) {
+export async function loader() {
   return {}
 }

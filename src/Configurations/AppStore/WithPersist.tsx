@@ -18,6 +18,7 @@ import reducers, {
   type TReducers
 } from '~/src/Redux/Reducers'
 
+import { FC } from 'react'
 import manifestConfig from '~/manifest.config'
 
 const persistConfig = {
@@ -40,12 +41,14 @@ export const AppStore = configureStore({
 
 const PersistedAppStore = persistStore(AppStore)
 
-export type TAppStore = ReturnType<typeof AppStore.getState>
+const { dispatch: appDispatch, getState: getAppStore } = AppStore
 
-export type TAppDispatch = typeof AppStore.dispatch
+export type TAppStore = ReturnType<typeof getAppStore>
+export type TAppDispatch = typeof appDispatch
+export { appDispatch, getAppStore }
 
-export const AppStoreProvider: React.FC<{
-  AppComponent: React.FunctionComponent<{ persisted: boolean }>
+export const AppStoreProvider: FC<{
+  AppComponent: FC<{ persisted: boolean }>
 }> = ({ AppComponent }) => (
   <Provider store={AppStore}>
     <PersistGate persistor={PersistedAppStore} onBeforeLift={() => undefined}>

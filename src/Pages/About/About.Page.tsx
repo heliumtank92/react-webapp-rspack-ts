@@ -1,9 +1,7 @@
 import { Typography } from '@mui/material'
-import type React from 'react'
+import { FC } from 'react'
 
-type IAboutPageProps = Record<string, never>
-
-const AboutPage: React.FunctionComponent<IAboutPageProps> = () => {
+const AboutPage: FC = () => {
   return <Typography variant='h2'>About</Typography>
 }
 

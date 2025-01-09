@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { FC, Suspense } from 'react'
 
 import Loader from '~/src/Components/Loader'
 
@@ -12,7 +12,7 @@ import {
 } from '~/src/Redux/Auth/Selectors'
 import performHandshake from '~/src/Services/performHandshake'
 
-const AppInitializer: React.FC = () => {
+const AppInitializer: FC = () => {
   const accessToken = useSelector(getAccessTokenSelector)
   const refreshToken = useSelector(getRefreshTokenSelector)
   const [initiated, setInitiated] = React.useState(false)

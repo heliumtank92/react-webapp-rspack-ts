@@ -1,5 +1,4 @@
-import type React from 'react'
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import {
   isRouteErrorResponse,
   useNavigate,
@@ -8,7 +7,7 @@ import {
 
 import Loader from '~/src/Components/Loader'
 
-const ErrorBoundary: React.FC = () => {
+const ErrorBoundary: FC = () => {
   const error = useRouteError()
   const navigate = useNavigate()
 
