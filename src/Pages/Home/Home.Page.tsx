@@ -1,4 +1,10 @@
-import { DsImage, DsStack, DsTypography } from '@am92/react-design-system'
+import {
+  DsImage,
+  DsRemixIcon,
+  DsStack,
+  DsToggle,
+  DsTypography
+} from '@am92/react-design-system'
 import { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import HOME_IMAGE from '~/src/Assets/HOME_IMAGE'
@@ -9,7 +15,7 @@ const HomePage: FC = () => {
   const dispatch = useDispatch()
   const { scheme } = useSelector(getThemeReducer)
 
-  const _handleSchemeChange = (_name: string, value: boolean) => {
+  const handleSchemeChange = (_name: string, value: boolean) => {
     const newScheme = value ? 'dark' : 'light'
     dispatch(setThemeSchemeAction(newScheme))
   }
@@ -26,16 +32,24 @@ const HomePage: FC = () => {
     >
       <DsImage
         srcSet={HOME_IMAGE}
-        aspectRatio={1}
         style={{ width: '100%', height: 'auto' }}
-        WrapperProps={{
-          sx: {
-            width: { xs: '150px', lg: '200px' },
-            height: { xs: '150px', lg: '200px' }
-          }
-        }}
+        WrapperProps={{ sx: { height: 'auto' } }}
       />
       <DsTypography variant='displayBoldLarge'>Home Page</DsTypography>
+      <DsStack
+        alignItems={'center'}
+        direction={'row'}
+        sx={{
+          gap: 'var(--ds-spacing-glacial)'
+        }}
+      >
+        <DsToggle
+          name='Dark Mode'
+          value={scheme === 'dark'}
+          onChange={handleSchemeChange}
+        />
+        <DsRemixIcon className='ri-contrast-2-line' />
+      </DsStack>
     </DsStack>
   )
 }
