@@ -55,10 +55,10 @@ Please Node: if you are running script for the first time, you may need to creat
       pluginFavicon('./public/favicon.svg', manifestConfig),
       pluginRenameAssetsAndReferences()
     )
+  }
 
-    if (process.env.HTTPS === 'true') {
-      rsBuildPlugins.push(pluginBasicSsl())
-    }
+  if (process.env.HTTPS === 'true') {
+    rsBuildPlugins.push(pluginBasicSsl())
   }
 
   // Split and filter blank values
