@@ -1,6 +1,6 @@
 import React, { FC, Suspense } from 'react'
 
-import Loader from '~/src/Components/Loader'
+import { Loader } from '~/src/Components/Loader'
 
 import { WEB_HTTP_CONTEXT } from '@am92/web-http'
 import { useSelector } from 'react-redux'

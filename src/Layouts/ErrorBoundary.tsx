@@ -5,7 +5,7 @@ import {
   useRouteError
 } from 'react-router-dom'
 
-import Loader from '~/src/Components/Loader'
+import { Loader } from '~/src/Components/Loader'
 
 const ErrorBoundary: FC = () => {
   const error = useRouteError()

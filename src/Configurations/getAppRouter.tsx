@@ -6,7 +6,7 @@ import {
   validatePublicRouteLoader
 } from '~/src/Helpers/Route.Helpers'
 
-import Loader from '~/src/Components/Loader'
+import { Loader } from '~/src/Components/Loader'
 import ErrorBoundary from '~/src/Layouts/ErrorBoundary'
 
 // Layouts
