@@ -34,7 +34,8 @@ No environment configuration files were found matching the following names:
   3. .env.${envMode}
   4. .env.${envMode}.local (Preferred)
 
-💡 Please ensure you are running the script with the correct --env-mode.
+Please ensure you are running the script with the correct --env-mode.
+Please Node: if you are running script for the first time, you may need to create a .env.production.local file from env.development file.
 ===========================================================
 `)
     process.exit(1)
