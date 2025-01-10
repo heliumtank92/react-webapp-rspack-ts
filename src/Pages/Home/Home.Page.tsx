@@ -30,7 +30,7 @@ const HomePage: FC = () => {
             )
         )}
       </picture>
-      <Typography variant='h2'>Home Page1</Typography>
+      <Typography variant='h2'>Home Page</Typography>
     </Stack>
   )
 }
