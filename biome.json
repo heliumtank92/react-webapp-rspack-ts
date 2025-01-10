@@ -52,7 +52,7 @@
         "noUnusedImports": { "level": "error", "fix": "safe" },
         "noUnusedLabels": "error",
         "noUnusedPrivateClassMembers": "error",
-        "noUnusedVariables": { "level": "error", "fix": "safe" },
+        "noUnusedVariables": "error",
         "useArrayLiterals": "off",
         "useIsNan": "error",
         "useJsxKeyInIterable": "error",
