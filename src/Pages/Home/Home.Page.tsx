@@ -1,25 +1,8 @@
-import {
-  DsImage,
-  DsRemixIcon,
-  DsStack,
-  DsToggle,
-  DsTypography
-} from '@am92/react-design-system'
+import { DsImage, DsStack, DsTypography } from '@am92/react-design-system'
 import { FC } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import HOME_IMAGE from '~/src/Assets/HOME_IMAGE'
-import { setThemeSchemeAction } from '~/src/Redux/Theme/Actions'
-import { getThemeReducer } from '~/src/Redux/Theme/Selectors'
 
 const HomePage: FC = () => {
-  const dispatch = useDispatch()
-  const { scheme } = useSelector(getThemeReducer)
-
-  const handleSchemeChange = (_name: string, value: boolean) => {
-    const newScheme = value ? 'dark' : 'light'
-    dispatch(setThemeSchemeAction(newScheme))
-  }
-
   return (
     <DsStack
       justifyContent={'center'}
@@ -42,20 +25,6 @@ const HomePage: FC = () => {
         }}
       />
       <DsTypography variant='displayBoldLarge'>Home Page</DsTypography>
-      <DsStack
-        alignItems={'center'}
-        direction={'row'}
-        sx={{
-          gap: 'var(--ds-spacing-glacial)'
-        }}
-      >
-        <DsToggle
-          name='Dark Mode'
-          value={scheme === 'dark'}
-          onChange={handleSchemeChange}
-        />
-        <DsRemixIcon className='ri-contrast-2-line' />
-      </DsStack>
     </DsStack>
   )
 }
