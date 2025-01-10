@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <%- htmlPlugin.tags.headTags %>
     <script defer src="/static/js/variables.js"></script>
     <script nomodule src="/static/js/unsupportedImport.js"></script>
   </head>
 
   <body>
     <div id="<%= mountId %>"></div>
+    <%- htmlPlugin.tags.bodyTags %>
   </body>
 </html>

@@ -140,7 +140,8 @@ Please Node: if you are running script for the first time, you may need to creat
             }
           }
         }
-      ]
+      ],
+      inject: false
     },
     performance: {
       removeConsole: isProduction,
