@@ -12,7 +12,7 @@ const HomePage: FC = () => {
       height='var(--100vh)'
     >
       <Picture srcSet={HOME_IMAGE} aspectRatio={1} />
-      <Typography variant='h2'>Home Page1</Typography>
+      <Typography variant='h2'>Home Page</Typography>
     </Stack>
   )
 }
