@@ -7,7 +7,7 @@ export type AppRouteItem = {
 
 const APP_ROUTES = {
   HOME: {
-    pathname: '/home'
+    pathname: '/'
   } as AppRouteItem,
   ABOUT: {
     pathname: '/about'
@@ -30,7 +30,7 @@ const APP_ROUTES = {
   } as AppRouteItem,
 
   DEFAULT_AUTH_FALLBACK: {
-    pathname: '/'
+    pathname: '/about'
   } as AppRouteItem
 }
 
