@@ -32,8 +32,14 @@ const HomePage: FC = () => {
     >
       <DsImage
         srcSet={HOME_IMAGE}
+        aspectRatio={1}
         style={{ width: '100%', height: 'auto' }}
-        WrapperProps={{ sx: { height: 'auto' } }}
+        WrapperProps={{
+          sx: {
+            width: { xs: '150px', lg: '200px' },
+            height: { xs: '150px', lg: '200px' }
+          }
+        }}
       />
       <DsTypography variant='displayBoldLarge'>Home Page</DsTypography>
       <DsStack
