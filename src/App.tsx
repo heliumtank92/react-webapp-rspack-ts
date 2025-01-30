@@ -1,4 +1,7 @@
-import { CssBaseline, ThemeProvider } from '@mui/material'
+import {
+  CssBaseline,
+  Experimental_CssVarsProvider as CssVarsProvider
+} from '@mui/material'
 
 import AppInitializer from '~/src/AppInitializer'
 import AppTheme from '~/src/AppTheme'
@@ -16,9 +19,9 @@ const App: FC<IAppProps> = props => {
   const { persisted } = props
 
   return (
-    <ThemeProvider theme={AppTheme} modeStorageKey={THEME_MODE_STORAGE_KEY}>
+    <CssVarsProvider theme={AppTheme} modeStorageKey={THEME_MODE_STORAGE_KEY}>
       <CssBaseline>{persisted && <AppInitializer />}</CssBaseline>
-    </ThemeProvider>
+    </CssVarsProvider>
   )
 }
 
