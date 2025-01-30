@@ -33,7 +33,7 @@ const HomePage: FC = () => {
       <DsImage
         srcSet={HOME_IMAGE}
         style={{ width: '100%', height: 'auto' }}
-        WrapperProps={{ sx: { height: 'auto' } }}
+        WrapperProps={{ sx: { maxWidth: 335, maxHeight: 260 } }}
       />
       <DsTypography variant='displayBoldLarge'>Home Page</DsTypography>
       <DsStack
