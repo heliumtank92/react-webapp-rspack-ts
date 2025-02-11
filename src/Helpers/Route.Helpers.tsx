@@ -46,6 +46,17 @@ export const validatePublicRouteLoader =
       return redirect(APP_ROUTES.DEFAULT_AUTH_FALLBACK.pathname)
     }
 
+    lazyLoadLoader(importer)
+
+    if (importer) {
+      const { loader } = await importer()
+      return loader(args)
+    }
+  }
+
+export const lazyLoadLoader =
+  (importer?: () => Promise<{ loader: LoaderFunction }>) =>
+  async (args: LoaderFunctionArgs) => {
     if (importer) {
       const { loader } = await importer()
       return loader(args)
