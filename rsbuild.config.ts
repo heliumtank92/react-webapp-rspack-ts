@@ -13,6 +13,8 @@ import manifestConfig from './manifest.config'
 import { pluginFavicon } from './rsBuildPlugins/Favicon'
 import { pluginRenameAssetsAndReferences } from './rsBuildPlugins/pluginRenameAssetsAndReferences'
 
+import { codeInspectorPlugin } from 'code-inspector-plugin'
+
 export default defineConfig(({ envMode, env }) => {
   const isProduction = env === 'production'
   const pwaEnabled = process.env.APP_PWA_ENABLE === 'true'
@@ -161,7 +163,7 @@ Please Node: if you are running script for the first time, you may need to creat
     tools: {
       rspack(_config, { appendPlugins }) {
         // Only register the plugin when RSDOCTOR is true, as the plugin will increase the build time.
-        if (process.env.RSDOCTOR) {
+        if (isProduction && process.env.RSDOCTOR) {
           appendPlugins(
             new RsdoctorRspackPlugin({
               supports: {
@@ -181,6 +183,10 @@ Please Node: if you are running script for the first time, you may need to creat
               exclude: [/\.html$/]
             })
           )
+        }
+
+        if (!isProduction) {
+          appendPlugins(codeInspectorPlugin({ bundler: 'rspack' }))
         }
       }
     }
