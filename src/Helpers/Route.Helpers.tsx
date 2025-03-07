@@ -1,5 +1,7 @@
-import { ComponentType, lazy, Suspense } from 'react'
-import { LoaderFunction, LoaderFunctionArgs, redirect } from 'react-router'
+import type { ComponentType } from 'react'
+import { lazy, Suspense } from 'react'
+import type { LoaderFunction, LoaderFunctionArgs } from 'react-router'
+import { redirect } from 'react-router'
 
 import { getIsLoggedInSelector } from '~/src/Redux/Auth/Selectors'
 

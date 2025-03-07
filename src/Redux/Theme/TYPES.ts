@@ -1,4 +1,4 @@
-import { DsPalette, SupportedColorScheme } from '@am92/react-design-system'
+import type { DsPalette, SupportedColorScheme } from '@am92/react-design-system'
 
 export type T_THEME_REDUCER = {
   defaultMode: 'light' | 'dark' | 'system'

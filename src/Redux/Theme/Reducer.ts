@@ -1,8 +1,8 @@
-import {
+import type {
   ActionReducerMapBuilder,
-  createSlice,
   CreateSliceOptions
 } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 import {
   setThemeAction,
@@ -11,7 +11,8 @@ import {
   setThemeSchemeAction
 } from './Actions'
 import { SLICE_NAME } from './Selectors'
-import { DEFAULT_THEME, INITIAL_STATE, T_THEME_REDUCER } from './TYPES'
+import type { T_THEME_REDUCER } from './TYPES'
+import { DEFAULT_THEME, INITIAL_STATE } from './TYPES'
 
 const sliceOptions: CreateSliceOptions<T_THEME_REDUCER> = {
   name: SLICE_NAME,

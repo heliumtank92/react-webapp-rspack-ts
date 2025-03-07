@@ -1,7 +1,7 @@
 import { createAction } from '@reduxjs/toolkit'
-import { DsPalette, SupportedColorScheme } from '@am92/react-design-system'
+import type { DsPalette, SupportedColorScheme } from '@am92/react-design-system'
 
-import { T_THEME_REDUCER } from './TYPES'
+import type { T_THEME_REDUCER } from './TYPES'
 
 export const setThemeSchemeAction = createAction<SupportedColorScheme, string>(
   'Theme/setThemeScheme'

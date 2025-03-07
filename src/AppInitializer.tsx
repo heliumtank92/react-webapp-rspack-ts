@@ -1,4 +1,5 @@
-import React, { FC, Suspense } from 'react'
+import type { FC } from 'react'
+import React, { Suspense } from 'react'
 import { useSelector } from 'react-redux'
 import { WEB_HTTP_CONTEXT } from '@am92/web-http'
 

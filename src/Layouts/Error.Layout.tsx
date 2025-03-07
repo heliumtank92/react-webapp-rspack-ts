@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import type { FC } from 'react'
 import { Outlet } from 'react-router'
 import { DsStack } from '@am92/react-design-system'
 

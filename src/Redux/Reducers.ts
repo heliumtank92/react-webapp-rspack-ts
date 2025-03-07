@@ -5,7 +5,7 @@ import { SLICE_NAME as AuthSliceName } from './Auth/Selectors'
 import type { T_AUTH_REDUCER } from './Auth/TYPES'
 import ThemeReducer from './Theme/Reducer'
 import { SLICE_NAME as ThemeSliceName } from './Theme/Selectors'
-import { T_THEME_REDUCER } from './Theme/TYPES'
+import type { T_THEME_REDUCER } from './Theme/TYPES'
 
 import ServiceTrackerReducer from './ServiceTracker/Reducer'
 import { SLICE_NAME as ServiceTrackerSliceName } from './ServiceTracker/Selectors'
