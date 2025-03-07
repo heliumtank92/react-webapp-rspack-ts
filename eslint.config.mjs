@@ -68,6 +68,16 @@ export default [
       'unusedImports/no-unused-imports': 'error',
       'import/no-duplicates': 'error',
       'import/first': 'error',
+      '@typescript-eslint/no-empty-object-type': [
+        'error',
+        {
+          allowInterfaces: 'with-single-extends'
+        }
+      ],
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { prefer: 'type-imports' }
+      ],
       'simple-import-sort/imports': [
         'error',
         {
