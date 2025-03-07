@@ -1,7 +1,9 @@
-import { FC, useCallback, useState } from 'react'
+import type { FC } from 'react'
+import { useCallback, useState } from 'react'
 import { Box, Fade, Skeleton } from '@mui/material'
 
-import { INNER_COMPONENT_STYLE, PictureProps } from './Picture.Types'
+import type { PictureProps } from './Picture.Types'
+import { INNER_COMPONENT_STYLE } from './Picture.Types'
 
 const PictureDefaultState = { stage: 'LOADING' }
 

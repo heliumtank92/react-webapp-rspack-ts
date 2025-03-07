@@ -1,8 +1,9 @@
-import { FC } from 'react'
+import type { FC } from 'react'
 import { Backdrop } from '@mui/material'
 import { Box, type SystemStyleObject, type Theme } from '@mui/system'
 
-import { LOADER_MAP, LoaderProps } from './Loader.Types'
+import type { LoaderProps } from './Loader.Types'
+import { LOADER_MAP } from './Loader.Types'
 
 export const Loader: FC<LoaderProps> = props => {
   const {

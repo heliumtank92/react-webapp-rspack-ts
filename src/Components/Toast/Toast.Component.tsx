@@ -1,12 +1,12 @@
-import { FC, forwardRef } from 'react'
-import { Alert, AlertProps } from '@mui/material'
-import {
-  CustomContentProps,
-  SnackbarProvider,
-  SnackbarProviderProps
-} from 'notistack'
+import type { FC } from 'react'
+import { forwardRef } from 'react'
+import type { AlertProps } from '@mui/material'
+import { Alert } from '@mui/material'
+import type { CustomContentProps, SnackbarProviderProps } from 'notistack'
+import { SnackbarProvider } from 'notistack'
 
-import { TOAST_VARIANT_MAP, TOAST_VARIANTS } from './Toast.Types'
+import type { TOAST_VARIANT_MAP } from './Toast.Types'
+import { TOAST_VARIANTS } from './Toast.Types'
 
 export const ToastProvider: FC<SnackbarProviderProps> = props => {
   const { children, Components, ...restProps } = props

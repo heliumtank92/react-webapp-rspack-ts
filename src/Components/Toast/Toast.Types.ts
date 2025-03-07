@@ -1,4 +1,4 @@
-import { AlertProps } from '@mui/material'
+import type { AlertProps } from '@mui/material'
 
 export type TTostVariant = Exclude<AlertProps['variant'], undefined>
 export type TTostVariantMap<V = true> = Record<TTostVariant, V>
