@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import type { FC } from 'react'
 import { Stack, Typography } from '@mui/material'
 
 import HOME_IMAGE from '~/src/Assets/HOME_IMAGE'

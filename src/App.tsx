@@ -1,6 +1,6 @@
 import '~/src/App.scss'
 
-import { FC } from 'react'
+import type { FC } from 'react'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 
 import { THEME_MODE_STORAGE_KEY } from '~/src/Constants/THEME'
