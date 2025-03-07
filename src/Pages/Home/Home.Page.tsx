@@ -1,7 +1,9 @@
-import { Stack, Typography } from '@mui/material'
 import { FC } from 'react'
-import HOME_IMAGE from '~/src/Assets/HOME_IMAGE'
+import { Stack, Typography } from '@mui/material'
+
 import { Picture } from '~/src/Components/Picture'
+
+import HOME_IMAGE from '~/src/Assets/HOME_IMAGE'
 
 const HomePage: FC = () => {
   return (

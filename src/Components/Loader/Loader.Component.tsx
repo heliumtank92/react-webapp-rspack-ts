@@ -1,7 +1,7 @@
 import { FC } from 'react'
-
 import { Backdrop } from '@mui/material'
 import { Box, type SystemStyleObject, type Theme } from '@mui/system'
+
 import { LOADER_MAP, LoaderProps } from './Loader.Types'
 
 export const Loader: FC<LoaderProps> = props => {

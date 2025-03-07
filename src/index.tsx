@@ -1,9 +1,10 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 
+import { AppStoreProvider } from '~/src/Configurations/AppStore'
+
 import App from '~/src/App'
 import AppErrorBoundary from '~/src/AppErrorBoundary'
-import { AppStoreProvider } from '~/src/Configurations/AppStore'
 
 const container = document.getElementById('root')
 if (container) {

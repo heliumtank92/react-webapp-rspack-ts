@@ -1,5 +1,6 @@
-import { Box, Fade, Skeleton } from '@mui/material'
 import { FC, useCallback, useState } from 'react'
+import { Box, Fade, Skeleton } from '@mui/material'
+
 import { INNER_COMPONENT_STYLE, PictureProps } from './Picture.Types'
 
 const PictureDefaultState = { stage: 'LOADING' }
@@ -56,7 +57,7 @@ export const Picture: FC<PictureProps> = props => {
     return (
       <picture onLoad={handleSetLoadedStage} onError={handleSetErrorStage}>
         {srcSet?.map((src, index) => {
-          const { src: imageSrc, style, ...restProps } = src
+          const { src: imageSrc, ...restProps } = src
           const isLast = index === srcSet.length - 1
 
           if (isLast) {

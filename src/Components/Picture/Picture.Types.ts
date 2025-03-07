@@ -1,5 +1,5 @@
-import { BoxProps, SkeletonProps } from '@mui/material'
 import { CSSProperties, ImgHTMLAttributes, SourceHTMLAttributes } from 'react'
+import { BoxProps, SkeletonProps } from '@mui/material'
 
 export interface PictureSrcSetProps
   extends Omit<

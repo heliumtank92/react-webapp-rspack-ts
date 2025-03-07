@@ -5,8 +5,10 @@ pre-commit:
       run: npm run tsc:lint -- --noEmit
       stage_fixed: true
     check:
-      run: npm run check -- --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      run: npm run check {staged_files}
       stage_fixed: true
-    format:
-      run: npm run format -- --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
-      stage_fixed: true
+# Validate commit messages
+commit-msg:
+  commands:
+    "lint commit message":
+      run: npx commitlint --edit {1}

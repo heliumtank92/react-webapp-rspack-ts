@@ -1,11 +1,12 @@
+import { FC, forwardRef } from 'react'
 import { Alert, AlertProps } from '@mui/material'
 import {
   CustomContentProps,
   SnackbarProvider,
   SnackbarProviderProps
 } from 'notistack'
-import { FC, forwardRef } from 'react'
-import { TOAST_VARIANTS, TOAST_VARIANT_MAP } from './Toast.Types'
+
+import { TOAST_VARIANT_MAP, TOAST_VARIANTS } from './Toast.Types'
 
 export const ToastProvider: FC<SnackbarProviderProps> = props => {
   const { children, Components, ...restProps } = props
@@ -64,3 +65,5 @@ export const ToastComponent = forwardRef<HTMLDivElement, IToastComponentProps>(
     return <Alert ref={ref} {...alertProps} />
   }
 )
+
+ToastComponent.displayName = 'ToastComponent'
