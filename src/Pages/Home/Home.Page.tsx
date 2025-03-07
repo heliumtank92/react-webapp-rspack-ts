@@ -1,3 +1,5 @@
+import { FC } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   DsImage,
   DsRemixIcon,
@@ -5,11 +7,11 @@ import {
   DsToggle,
   DsTypography
 } from '@am92/react-design-system'
-import { FC } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import HOME_IMAGE from '~/src/Assets/HOME_IMAGE'
+
 import { setThemeSchemeAction } from '~/src/Redux/Theme/Actions'
 import { getThemeReducer } from '~/src/Redux/Theme/Selectors'
+
+import HOME_IMAGE from '~/src/Assets/HOME_IMAGE'
 
 const HomePage: FC = () => {
   const dispatch = useDispatch()

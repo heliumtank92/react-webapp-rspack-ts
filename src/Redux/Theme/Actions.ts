@@ -1,5 +1,5 @@
-import { DsPalette, SupportedColorScheme } from '@am92/react-design-system'
 import { createAction } from '@reduxjs/toolkit'
+import { DsPalette, SupportedColorScheme } from '@am92/react-design-system'
 
 import { T_THEME_REDUCER } from './TYPES'
 

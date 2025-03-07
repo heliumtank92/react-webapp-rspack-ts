@@ -1,14 +1,16 @@
-import { RouteObject, createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, RouteObject } from 'react-router-dom'
+
+import ErrorBoundary from '~/src/Layouts/ErrorBoundary'
+
+import Loader from '~/src/Components/Loader'
 
 import APP_ROUTES from '~/src/Constants/APP_ROUTES'
+
 import {
   lazyLoadLoader,
   lazyLoadPage,
   validatePublicRouteLoader
 } from '~/src/Helpers/Route.Helpers'
-
-import Loader from '~/src/Components/Loader'
-import ErrorBoundary from '~/src/Layouts/ErrorBoundary'
 
 // Layouts
 const MainLayout = lazyLoadPage(

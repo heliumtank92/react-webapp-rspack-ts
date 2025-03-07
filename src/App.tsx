@@ -1,18 +1,20 @@
+import '~/src/App.scss'
+
+import { FC } from 'react'
+import { useSelector } from 'react-redux'
 import {
-  Experimental_CssVarsProvider as CssVarsProvider,
   DsCssBaseline,
+  Experimental_CssVarsProvider as CssVarsProvider,
   getTheme
 } from '@am92/react-design-system'
 
-import AppInitializer from '~/src/AppInitializer'
+import ThemeManager from './ThemeManager'
+
+import { getThemeReducer } from './Redux/Theme/Selectors'
 
 import { THEME_MODE_STORAGE_KEY } from '~/src/Constants/THEME'
 
-import '~/src/App.scss'
-import { FC } from 'react'
-import { useSelector } from 'react-redux'
-import { getThemeReducer } from './Redux/Theme/Selectors'
-import ThemeManager from './ThemeManager'
+import AppInitializer from '~/src/AppInitializer'
 
 export interface IAppProps {
   persisted: boolean

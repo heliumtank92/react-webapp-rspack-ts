@@ -1,18 +1,16 @@
-import { useColorScheme } from '@am92/react-design-system'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { useColorScheme } from '@am92/react-design-system'
 
 import { getThemeReducer } from '~/src/Redux/Theme/Selectors'
 
-export interface IThemeManagerProps {}
-
-const ThemeManager: React.FC<IThemeManagerProps> = () => {
+const ThemeManager: React.FC = () => {
   const { scheme } = useSelector(getThemeReducer)
   const { colorScheme, setColorScheme } = useColorScheme()
 
   useEffect(() => {
-    if (colorScheme !== scheme) {
-      setColorScheme && setColorScheme(scheme)
+    if (colorScheme !== scheme && setColorScheme) {
+      setColorScheme(scheme)
     }
   }, [colorScheme, scheme])
 

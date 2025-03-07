@@ -1,14 +1,14 @@
 import {
   ActionReducerMapBuilder,
-  CreateSliceOptions,
-  createSlice
+  createSlice,
+  CreateSliceOptions
 } from '@reduxjs/toolkit'
 
 import {
   setThemeAction,
+  setThemefontFamilyAction,
   setThemePaletteAction,
-  setThemeSchemeAction,
-  setThemefontFamilyAction
+  setThemeSchemeAction
 } from './Actions'
 import { SLICE_NAME } from './Selectors'
 import { DEFAULT_THEME, INITIAL_STATE, T_THEME_REDUCER } from './TYPES'
