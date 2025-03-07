@@ -1,5 +1,5 @@
-import type { WebHttpError } from '@am92/web-http'
 import { createAction } from '@reduxjs/toolkit'
+import type { WebHttpError } from '@am92/web-http'
 
 import type { TraceActions } from './serviceActionCreator'
 

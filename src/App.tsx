@@ -1,12 +1,12 @@
-import { CssBaseline, ThemeProvider } from '@mui/material'
+import '~/src/App.scss'
 
-import AppInitializer from '~/src/AppInitializer'
-import AppTheme from '~/src/AppTheme'
+import { FC } from 'react'
+import { CssBaseline, ThemeProvider } from '@mui/material'
 
 import { THEME_MODE_STORAGE_KEY } from '~/src/Constants/THEME'
 
-import '~/src/App.scss'
-import { FC } from 'react'
+import AppInitializer from '~/src/AppInitializer'
+import AppTheme from '~/src/AppTheme'
 
 export interface IAppProps {
   persisted: boolean

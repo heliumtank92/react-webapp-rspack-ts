@@ -1,8 +1,10 @@
-import { ComponentType, Suspense, lazy } from 'react'
+import { ComponentType, lazy, Suspense } from 'react'
 import { LoaderFunction, LoaderFunctionArgs, redirect } from 'react-router'
-import { AppStore } from '~/src/Configurations/AppStore'
-import APP_ROUTES from '~/src/Constants/APP_ROUTES'
+
 import { getIsLoggedInSelector } from '~/src/Redux/Auth/Selectors'
+
+import APP_ROUTES from '~/src/Constants/APP_ROUTES'
+import { AppStore } from '~/src/Configurations/AppStore'
 
 export const lazyLoadPage = (
   importer: () => Promise<{ default: ComponentType }>,
