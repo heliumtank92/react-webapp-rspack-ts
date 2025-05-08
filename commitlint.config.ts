@@ -7,7 +7,7 @@ const configuration: UserConfig = {
     'type-empty': [2, 'never'],
     // Allowed type enums
     // 'type-enum': [2,'always', ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'chore', 'revert']],
-    'scope-empty': [2, 'never'],
+    'scope-empty': [0, 'never'],
     'scope-enum': [
       0,
       'always',
