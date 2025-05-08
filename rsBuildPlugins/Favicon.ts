@@ -1,7 +1,6 @@
 import crypto from 'node:crypto'
 import fs from 'node:fs'
 import path from 'node:path'
-
 import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core'
 import { type FaviconOptions, favicons } from 'favicons'
 import { parseDocument } from 'htmlparser2'
@@ -59,34 +58,35 @@ export const pluginFavicon = (
       }
       const response = await favicons(source, faviconConfig)
 
-      api.processAssets(
-        { stage: 'additional' },
-        ({ assets: _assets, sources, compilation }) => {
-          response.images.map(({ name, contents }) => {
-            const source = new sources.RawSource(contents)
-            compilation.emitAsset(`${iconPrefix}${name}`, source)
-          })
+      api.processAssets({ stage: 'additional' }, ({ sources, compilation }) => {
+        response.images.map(({ name, contents }) => {
+          const source = new sources.RawSource(contents)
+          compilation.emitAsset(`${iconPrefix}${name}`, source)
+        })
 
-          response.files.map(({ name, contents }) => {
-            const source = new sources.RawSource(contents)
-            compilation.emitAsset(`${iconPrefix}${name}`, source)
-          })
+        response.files.map(({ name, contents }) => {
+          const source = new sources.RawSource(contents)
+          compilation.emitAsset(`${iconPrefix}${name}`, source)
+        })
 
-          const versionFileContent = JSON.stringify(
-            {
-              name: options?.appShortName || options?.appName || '',
-              description: options?.appDescription || '',
-              version: options?.version || '',
-              buildAt: new Date().getTime(),
-              buildEnv: process.env.NODE_ENV
-            },
-            null,
-            2
-          )
-          const source = new sources.RawSource(versionFileContent)
-          compilation.emitAsset('version.json', source)
-        }
-      )
+        const versionFileContent = JSON.stringify(
+          {
+            name: options?.appShortName || options?.appName || '',
+            description: options?.appDescription || '',
+            version: options?.version || '',
+            buildAt: new Date().toLocaleString('en-IN', {
+              timeZone: 'Asia/Kolkata',
+              dateStyle: 'medium',
+              timeStyle: 'medium'
+            }),
+            buildEnv: process.env.NODE_ENV
+          },
+          null,
+          2
+        )
+        const source = new sources.RawSource(versionFileContent)
+        compilation.emitAsset('version.json', source)
+      })
 
       const htmlTags = response.html.map((html: string) => {
         return parseHtmlString(html)
@@ -96,8 +96,8 @@ export const pluginFavicon = (
         const newHeadTags = headTags.concat(htmlTags)
         return { headTags: newHeadTags, bodyTags }
       })
-    } catch (error: any) {
-      console.log(error?.message) // Error description e.g. "An unknown error has occurred"
+    } catch (error: unknown) {
+      console.log((error as Error)?.message) // Error description e.g. "An unknown error has occurred"
     }
   }
 })
