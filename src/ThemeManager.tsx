@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useLayoutEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useColorScheme } from '@am92/react-design-system'
 
@@ -8,7 +8,8 @@ const ThemeManager: React.FC = () => {
   const { scheme } = useSelector(getThemeReducer)
   const { colorScheme, setColorScheme } = useColorScheme()
 
-  useEffect(() => {
+  // To ensure the color scheme is set correctly on the first render & solve flicker if two tab with different color schemes are open.
+  useLayoutEffect(() => {
     if (colorScheme !== scheme && setColorScheme) {
       setColorScheme(scheme)
     }
