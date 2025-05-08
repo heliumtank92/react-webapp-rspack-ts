@@ -1,19 +1,18 @@
 import { GenerateSW } from '@aaroon/workbox-rspack-plugin'
-import { type RsbuildConfig, defineConfig, loadEnv } from '@rsbuild/core'
+import { defineConfig, loadEnv, type RsbuildConfig } from '@rsbuild/core'
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry'
 import { pluginBasicSsl } from '@rsbuild/plugin-basic-ssl'
 import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill'
 import { pluginReact } from '@rsbuild/plugin-react'
 import { pluginSass } from '@rsbuild/plugin-sass'
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin'
+import { codeInspectorPlugin } from 'code-inspector-plugin'
 import { pluginEjs } from 'rsbuild-plugin-ejs'
 import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser'
 
 import manifestConfig from './manifest.config'
 import { pluginFavicon } from './rsBuildPlugins/Favicon'
 import { pluginRenameAssetsAndReferences } from './rsBuildPlugins/pluginRenameAssetsAndReferences'
-
-import { codeInspectorPlugin } from 'code-inspector-plugin'
 
 export default defineConfig(({ envMode, env }) => {
   const isProduction = env === 'production'
@@ -153,6 +152,7 @@ Please Node: if you are running script for the first time, you may need to creat
           type: 'all-assets',
           include: process.env.PRELOAD?.split(',').map(fileName => {
             const [name, ext] = fileName.split('.')
+            // eslint-disable-next-line
             return new RegExp(`^.*?\/${name}.*.${ext}$`)
           })
         }) ||

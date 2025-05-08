@@ -1,6 +1,6 @@
 import pluginJs from '@eslint/js'
 import importPlugin from 'eslint-plugin-import'
-import eslintPluginJsonc from 'eslint-plugin-jsonc'
+// import eslintPluginJsonc from 'eslint-plugin-jsonc'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import pluginReact from 'eslint-plugin-react'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
@@ -33,7 +33,7 @@ export default [
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   pluginReact.configs.flat['jsx-runtime'],
-  ...eslintPluginJsonc.configs['flat/recommended-with-jsonc'],
+  // ...eslintPluginJsonc.configs['flat/recommended-with-jsonc'],
   eslintPluginPrettierRecommended,
   {
     settings: {
