@@ -1,6 +1,6 @@
 import '@fontsource-variable/inter/opsz.css'
 
-import { extendTheme } from '@mui/material'
+import { experimental_extendTheme as extendTheme } from '@mui/material'
 
 const AppTheme = extendTheme({
   typography: {
