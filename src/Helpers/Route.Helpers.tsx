@@ -25,7 +25,7 @@ export const lazyLoadPage = (
 }
 
 export const validatePrivateRouteLoader =
-  (importer?: Promise<{ loader: LoaderFunction }>) =>
+  (importer?: () => Promise<{ loader: LoaderFunction }>) =>
   async (args: LoaderFunctionArgs) => {
     const state = AppStore.getState()
     const isLoggedIn = getIsLoggedInSelector(state)
@@ -34,10 +34,7 @@ export const validatePrivateRouteLoader =
       return redirect(APP_ROUTES.DEFAULT_UNAUTH_FALLBACK.pathname)
     }
 
-    if (importer) {
-      const { loader } = await importer
-      return loader(args)
-    }
+    return lazyLoadLoader(importer)(args)
   }
 
 export const validatePublicRouteLoader =
@@ -50,12 +47,7 @@ export const validatePublicRouteLoader =
       return redirect(APP_ROUTES.DEFAULT_AUTH_FALLBACK.pathname)
     }
 
-    lazyLoadLoader(importer)
-
-    if (importer) {
-      const { loader } = await importer()
-      return loader(args)
-    }
+    return lazyLoadLoader(importer)(args)
   }
 
 export const lazyLoadLoader =
