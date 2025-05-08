@@ -17,6 +17,7 @@ import { pluginRenameAssetsAndReferences } from './rsBuildPlugins/pluginRenameAs
 export default defineConfig(({ envMode, env }) => {
   const isProduction = env === 'production'
   const pwaEnabled = process.env.APP_PWA_ENABLE === 'true'
+  const codeInspectorEnabled = process.env.APP_DEV_INSPECTION_ENABLED === 'true'
 
   const { publicVars, parsed, filePaths } = loadEnv({
     prefixes: ['APP_', 'AS_', 'npm_package_'],
@@ -188,7 +189,7 @@ Please Node: if you are running script for the first time, you may need to creat
           )
         }
 
-        if (!isProduction) {
+        if (!isProduction && codeInspectorEnabled) {
           appendPlugins(codeInspectorPlugin({ bundler: 'rspack' }))
         }
       }
