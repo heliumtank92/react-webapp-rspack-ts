@@ -9,12 +9,20 @@ const configuration: UserConfig = {
     // 'type-enum': [2,'always', ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'chore', 'revert']],
     'scope-empty': [2, 'never'],
     'scope-enum': [
-      2,
+      0,
       'always',
-      ['env', 'redux', 'packages', 'breaking-change', 'error', 'commit-lint']
+      [
+        'env',
+        'redux',
+        'packages',
+        'breaking-change',
+        'error',
+        'commit-lint',
+        'config'
+      ]
     ], // define allowed scopes as per your project
     'subject-empty': [2, 'never'],
-    'subject-case': [2, 'always', 'lower-case'], // lowercase summary
+    'subject-case': [2, 'always', 'sentence-case'], // sentence case summary
     'header-full-stop': [2, 'never', '.'], // no full stop at the end of header
 
     // Body

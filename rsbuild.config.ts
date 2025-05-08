@@ -92,6 +92,9 @@ Please Node: if you are running script for the first time, you may need to creat
     },
     output: {
       cleanDistPath: isProduction,
+      distPath: {
+        root: 'build'
+      },
       legalComments: 'none',
       polyfill: isProduction ? 'usage' : 'off',
       sourceMap: {
