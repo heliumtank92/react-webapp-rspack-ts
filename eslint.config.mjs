@@ -158,8 +158,9 @@ export default [
       parser: jsoncParser
     },
     rules: {
-      ...jsonc.configs['flat/base'].rules
-      // ...jsonc.configs['flat/recommended-with-json5'].rules
+      ...jsonc.configs['flat/recommended-with-json'].rules,
+      ...jsonc.configs['flat/recommended-with-jsonc'].rules,
+      ...jsonc.configs['flat/recommended-with-json5'].rules
     }
   },
 
