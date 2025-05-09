@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 
 // @ts-expect-error since it is js file
 import supportedBrowsers from '~/public/static/js/supportedBrowsers.js'
