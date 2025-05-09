@@ -3,9 +3,11 @@ import importPlugin from 'eslint-plugin-import'
 import jsonc from 'eslint-plugin-jsonc'
 import prettier from 'eslint-plugin-prettier/recommended'
 import react from 'eslint-plugin-react'
+import reactHooks from 'eslint-plugin-react-hooks'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import unusedImports from 'eslint-plugin-unused-imports'
 import globals from 'globals'
+import jsoncParser from 'jsonc-eslint-parser'
 import tseslint from 'typescript-eslint'
 
 /** @type {import("eslint").Linter.FlatConfig[]} */
@@ -20,11 +22,9 @@ export default [
       '**/.cache/**',
       '**/coverage/**',
       '**/storybook-static/**',
-      '**/package-lock.json',
       '**/yarn.lock',
       '**/pnpm-lock.yaml',
-      '**/.DS_Store',
-      'src/AssetFiles/*' // Keeping your existing ignore
+      '**/.DS_Store'
     ]
   },
 
@@ -48,12 +48,16 @@ export default [
       react: { version: 'detect' }
     },
     plugins: {
-      react
+      react,
+      'react-hooks': reactHooks
     },
     rules: {
       ...react.configs.flat.recommended.rules,
       ...react.configs.flat['jsx-runtime'].rules,
-      'react/prop-types': 'off' // As in your original config
+      'react/prop-types': 'off', // Disable prop-types as we use TypeScript for type checking
+      'react/self-closing-comp': 'error', //Enforce self-closing tags for components without children
+      'react/jsx-key': 'error', //Ensures key props are provided to elements in lists for React reconciliation.
+      'react/jsx-no-target-blank': 'error' //Any JSX <a> element with target="_blank" must also have rel="noreferrer" (or rel="noopener noreferrer")
     }
   },
 
@@ -86,7 +90,8 @@ export default [
       '@typescript-eslint/consistent-type-imports': [
         'error',
         { prefer: 'type-imports' }
-      ]
+      ],
+      '@typescript-eslint/no-useless-constructor': 'warn'
     }
   },
 
@@ -150,10 +155,12 @@ export default [
     files: ['**/*.json', '**/*.jsonc', '**/*.json5'],
     plugins: { jsonc },
     languageOptions: {
-      parser: jsonc.parser
+      parser: jsoncParser
     },
     rules: {
-      ...jsonc.configs['flat/recommended-with-jsonc'].rules
+      ...jsonc.configs['flat/recommended-with-json'].rules,
+      ...jsonc.configs['flat/recommended-with-jsonc'].rules,
+      ...jsonc.configs['flat/recommended-with-json5'].rules
     }
   },
 
@@ -176,7 +183,19 @@ export default [
       'no-case-declarations': 'off',
       'no-unreachable-loop': 'error',
       'no-unneeded-ternary': 'error',
-      'no-unused-vars': 'off' // Handled by unused-imports and @typescript-eslint
+      'no-unused-vars': 'off', // Handled by unused-imports and @typescript-eslint
+      'default-case': ['error', { commentPattern: '^no default$' }], // require default case in switch statements
+      'default-case-last': 'error', // Enforce default clauses in switch statements to be last
+      'no-else-return': ['error', { allowElseIf: false }], // disallow else after a return in an if
+      'no-empty-function': [
+        // disallow empty functions, except for standalone funcs/arrows
+        'error',
+        {
+          allow: ['arrowFunctions', 'functions', 'methods']
+        }
+      ],
+      'no-compare-neg-zero': 'error', // Disallow comparisons to negative zero
+      'no-unreachable': 'error' // disallow unreachable statements after a return, throw, continue, or break statement
     }
   }
 ]
