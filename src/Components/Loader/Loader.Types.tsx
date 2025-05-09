@@ -1,3 +1,4 @@
+import type React from 'react'
 import type { BackdropProps, BoxProps } from '@mui/material'
 
 import { SingleDotLoader } from './SingleDotLoader'
