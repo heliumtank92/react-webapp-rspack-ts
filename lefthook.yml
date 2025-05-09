@@ -1,14 +1,16 @@
+# Lefthook configuration file
+# Documentation:
 pre-commit:
   parallel: true
   commands:
-    compile:
-      run: npm run tsc:lint -- --noEmit
+    tsc-lint:
+      run: npm run tsc:lint
+    eslint-lint:
+      run: npm run check {staged_files} -- --fix
       stage_fixed: true
-    check:
-      run: npm run check {staged_files}
-      stage_fixed: true
+
 # Validate commit messages
 commit-msg:
   commands:
-    "lint commit message":
+    commit-lint:
       run: npx commitlint --edit {1}
