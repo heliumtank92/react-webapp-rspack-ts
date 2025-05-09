@@ -1,3 +1,5 @@
+/* eslint no-var: 0 */ // --> OFF
+/* eslint no-undef: 0 */ // --> OFF
 var supportedBrowsers = require('./supportedBrowsers.js')(function () {
   try {
     // Test for native `import` statement support
