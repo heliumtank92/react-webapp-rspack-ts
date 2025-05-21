@@ -11,13 +11,16 @@ import { pluginEjs } from 'rsbuild-plugin-ejs'
 import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser'
 
 import manifestConfig from './manifest.config'
+import obfuscatorConfig from './obfuscator.config'
 import { pluginFavicon } from './rsBuildPlugins/Favicon'
+import WebpackObfuscatorPlugin from './rsBuildPlugins/pluginCodeObfuscator/WebpackObfuscatorPlugin'
 import { pluginRenameAssetsAndReferences } from './rsBuildPlugins/pluginRenameAssetsAndReferences'
 
 export default defineConfig(({ envMode, env }) => {
-  const isProduction = env === 'production'
+  const isProdBuild = env === 'production'
   const pwaEnabled = process.env.APP_PWA_ENABLE === 'true'
   const codeInspectorEnabled = process.env.APP_DEV_INSPECTION_ENABLED === 'true'
+  const isProduction = envMode === 'production'
 
   const { publicVars, parsed, filePaths } = loadEnv({
     prefixes: ['APP_', 'AS_', 'npm_package_'],
@@ -50,7 +53,7 @@ Please Node: if you are running script for the first time, you may need to creat
     pluginSass()
   ]
 
-  if (isProduction) {
+  if (isProdBuild) {
     rsBuildPlugins.push(
       pluginAssetsRetry(),
       pluginHtmlMinifierTerser(),
@@ -73,7 +76,7 @@ Please Node: if you are running script for the first time, you may need to creat
       progressBar: true
     },
     server: {
-      headers: isProduction
+      headers: isProdBuild
         ? {
             'cache-control': 'max-age=31536000, s-maxage=31536000'
           }
@@ -92,18 +95,21 @@ Please Node: if you are running script for the first time, you may need to creat
       }
     },
     output: {
-      cleanDistPath: isProduction,
+      cleanDistPath: isProdBuild,
       distPath: {
         root: 'build'
       },
       legalComments: 'none',
-      polyfill: isProduction ? 'usage' : 'off',
+      polyfill: isProdBuild ? 'usage' : 'off',
       sourceMap: {
-        js: isProduction
-          ? // Use a high quality source map format for production
-            'source-map'
-          : // Use a more performant source map format for development
-            'cheap-module-source-map',
+        js: !isProdBuild
+          ? // Use a more performant source map format for development
+            'cheap-module-source-map'
+          : isProduction
+            ? // Generate hidden source map in production
+              'hidden-source-map'
+            : // Use a high quality source map format for other environments
+              'source-map',
         css: false
       },
       copy: [
@@ -149,8 +155,8 @@ Please Node: if you are running script for the first time, you may need to creat
       inject: false
     },
     performance: {
-      removeConsole: isProduction,
-      removeMomentLocale: isProduction,
+      removeConsole: isProduction, // Remove console based on the env mode
+      removeMomentLocale: isProdBuild,
       preload:
         (process.env.PRELOAD && {
           type: 'all-assets',
@@ -166,8 +172,12 @@ Please Node: if you are running script for the first time, you may need to creat
     },
     tools: {
       rspack(_config, { appendPlugins }) {
+        _config.output = _config.output || {}
+        _config.output.sourceMapFilename = isProduction
+          ? '../source-maps/[file].map' // Generate hidden source map in the root directory of the project in production
+          : '[file].map' // Generates in the same directory for other envs
         // Only register the plugin when RSDOCTOR is true, as the plugin will increase the build time.
-        if (isProduction && process.env.RSDOCTOR) {
+        if (isProdBuild && process.env.RSDOCTOR) {
           appendPlugins(
             new RsdoctorRspackPlugin({
               supports: {
@@ -178,19 +188,23 @@ Please Node: if you are running script for the first time, you may need to creat
         }
 
         // TODO: Optional
-        if (isProduction && pwaEnabled) {
+        if (isProdBuild && pwaEnabled) {
           appendPlugins(
             new GenerateSW({
               swDest: './sw.js',
               cleanupOutdatedCaches: true,
               inlineWorkboxRuntime: true,
-              exclude: [/\.html$/]
+              exclude: [/\.html$/, /\.map$/, /^manifest.*\.js$/]
             })
           )
         }
 
-        if (!isProduction && codeInspectorEnabled) {
+        if (!isProdBuild && codeInspectorEnabled) {
           appendPlugins(codeInspectorPlugin({ bundler: 'rspack' }))
+        }
+
+        if (isProdBuild) {
+          appendPlugins(new WebpackObfuscatorPlugin(obfuscatorConfig, []))
         }
       }
     }
