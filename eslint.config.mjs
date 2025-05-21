@@ -73,7 +73,8 @@ export default [
       },
       globals: {
         // Add browser globals here as well for TSX files
-        ...globals.browser
+        ...globals.browser,
+        ...globals.node
       }
     },
     plugins: {
@@ -195,7 +196,9 @@ export default [
         }
       ],
       'no-compare-neg-zero': 'error', // Disallow comparisons to negative zero
-      'no-unreachable': 'error' // disallow unreachable statements after a return, throw, continue, or break statement
+      'no-unreachable': 'error', // disallow unreachable statements after a return, throw, continue, or break statement
+      'no-multi-str': 'warn',
+      'no-unsafe-finally': 'error'
     }
   }
 ]

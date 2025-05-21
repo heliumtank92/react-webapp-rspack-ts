@@ -18,10 +18,9 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-
     "paths": {
       "~/*": ["./*"]
     }
   },
-  "include": ["src", "env.d.ts"]
+  "exclude": ["node_modules", "build", "dist", ".vscode"]
 }
