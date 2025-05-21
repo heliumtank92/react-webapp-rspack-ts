@@ -16,7 +16,7 @@
     "tsc:lint": "tsc --noEmit"
   },
   "dependencies": {
-    "@am92/web-http": "^2.0.28",
+    "@am92/web-http": "^2.0.29",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@fontsource-variable/inter": "^5.2.5",
