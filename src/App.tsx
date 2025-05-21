@@ -1,10 +1,8 @@
 import '~/src/App.scss'
 
 import type { FC } from 'react'
-import {
-  CssBaseline,
-  Experimental_CssVarsProvider as CssVarProvider
-} from '@mui/material'
+import { CssBaseline } from '@mui/material'
+import { ThemeProvider } from '@mui/material/styles'
 
 import { ToastProvider } from '~/src/Components/Toast'
 
@@ -21,11 +19,11 @@ const App: FC<IAppProps> = props => {
   const { persisted } = props
 
   return (
-    <CssVarProvider theme={AppTheme} modeStorageKey={THEME_MODE_STORAGE_KEY}>
+    <ThemeProvider theme={AppTheme} modeStorageKey={THEME_MODE_STORAGE_KEY}>
       <CssBaseline>
         <ToastProvider>{persisted && <AppInitializer />}</ToastProvider>
       </CssBaseline>
-    </CssVarProvider>
+    </ThemeProvider>
   )
 }
 
