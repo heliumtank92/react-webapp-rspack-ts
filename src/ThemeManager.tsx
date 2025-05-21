@@ -1,22 +1,44 @@
-import type React from 'react'
-import { useLayoutEffect } from 'react'
-import { useSelector } from 'react-redux'
+import type { FC } from 'react'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import type { SupportedColorScheme } from '@am92/react-design-system'
 import { useColorScheme } from '@am92/react-design-system'
 
+import { setThemeSchemeAction } from './Redux/Theme/Actions'
 import { getThemeReducer } from '~/src/Redux/Theme/Selectors'
 
-const ThemeManager: React.FC = () => {
+const validThemes: readonly SupportedColorScheme[] = [
+  'light',
+  'dark',
+  'highContrast'
+]
+const isSupportedColorScheme = (
+  value: unknown
+): value is SupportedColorScheme =>
+  typeof value === 'string' &&
+  validThemes.includes(value as SupportedColorScheme)
+
+const ThemeManager: FC = () => {
+  const dispatch = useDispatch()
   const { scheme } = useSelector(getThemeReducer)
   const { colorScheme, setColorScheme } = useColorScheme()
 
-  // To ensure the color scheme is set correctly on the first render & solve flicker if two tab with different color schemes are open.
-  useLayoutEffect(() => {
+  const handleStorage = ({ newValue }: StorageEvent) => {
+    if (newValue && newValue !== scheme && isSupportedColorScheme(newValue)) {
+      dispatch(setThemeSchemeAction(newValue))
+    }
+  }
+
+  useEffect(() => {
     if (colorScheme !== scheme && setColorScheme) {
       setColorScheme(scheme)
     }
-  }, [colorScheme, scheme])
 
-  return false // Functional component doesn't render anything
+    window.addEventListener('storage', handleStorage)
+    return () => window.removeEventListener('storage', handleStorage)
+  }, [scheme])
+
+  return null
 }
 
 export default ThemeManager
