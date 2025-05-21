@@ -1,5 +1,6 @@
-import { Component } from 'react'
-// @ts-ignore
+import React, { Component } from 'react'
+
+// @ts-expect-error since it is js file
 import supportedBrowsers from '~/public/static/js/supportedBrowsers.js'
 import SomethingWentWrongPage from '~/src/Pages/SomethingWentWrong/SomethingWentWrong.Page'
 import UnsupportedBrowsersPage from '~/src/Pages/UnsupportedBrowsers/UnsupportedBrowsers.Page'
@@ -35,7 +36,7 @@ export default class AppErrorBoundary extends Component<
     errorComponentCode: undefined
   }
 
-  static getDerivedStateFromError(_error: Error): IAppErrorBoundaryState {
+  static getDerivedStateFromError(): IAppErrorBoundaryState {
     // Update state to show fallback UI when an error occurs
     return { errorComponentCode: getErrorComponentCode() }
   }

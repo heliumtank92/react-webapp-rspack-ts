@@ -1,13 +1,17 @@
-import { RouteObject, createBrowserRouter } from 'react-router-dom'
+import type { RouteObject } from 'react-router-dom'
+import { createBrowserRouter } from 'react-router-dom'
+
+import ErrorBoundary from '~/src/Layouts/ErrorBoundary'
+
+import Loader from '~/src/Components/Loader'
 
 import APP_ROUTES from '~/src/Constants/APP_ROUTES'
+
 import {
+  lazyLoadLoader,
   lazyLoadPage,
   validatePublicRouteLoader
 } from '~/src/Helpers/Route.Helpers'
-
-import Loader from '~/src/Components/Loader'
-import ErrorBoundary from '~/src/Layouts/ErrorBoundary'
 
 // Layouts
 const MainLayout = lazyLoadPage(
@@ -52,7 +56,7 @@ const AboutPage = lazyLoadPage(
 )
 
 // NotFound
-const NotFoundLoader = validatePublicRouteLoader(
+const NotFoundLoader = lazyLoadLoader(
   () =>
     import(
       /* webpackChunkName: "NotFoundLoader" */ '~/src/Pages/NotFound/NotFound.Loader'
@@ -67,7 +71,7 @@ const NotFoundPage = lazyLoadPage(
 )
 
 // SomethingWentWrong
-const SomethingWentWrongLoader = validatePublicRouteLoader(
+const SomethingWentWrongLoader = lazyLoadLoader(
   () =>
     import(
       /* webpackChunkName: "SomethingWentWrongLoader" */ '~/src/Pages/SomethingWentWrong/SomethingWentWrong.Loader'
@@ -82,7 +86,7 @@ const SomethingWentWrongPage = lazyLoadPage(
 )
 
 // UnsupportedBrowsers
-const UnsupportedBrowsersLoader = validatePublicRouteLoader(
+const UnsupportedBrowsersLoader = lazyLoadLoader(
   () =>
     import(
       /* webpackChunkName: "UnsupportedBrowsersLoader" */ '~/src/Pages/UnsupportedBrowsers/UnsupportedBrowsers.Loader'

@@ -1,7 +1,9 @@
-import { FC, Suspense, useId } from 'react'
+import type { FC } from 'react'
+import { Suspense, useId } from 'react'
 import { RouterProvider } from 'react-router-dom'
 
 import Loader from '~/src/Components/Loader'
+
 import getAppRouter from '~/src/Configurations/getAppRouter'
 
 let router: ReturnType<typeof getAppRouter> | undefined

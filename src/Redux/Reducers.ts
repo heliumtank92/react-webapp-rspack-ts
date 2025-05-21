@@ -1,4 +1,4 @@
-import { type ReducersMapObject, combineReducers } from 'redux'
+import { combineReducers, type ReducersMapObject } from 'redux'
 
 import AuthReducer from './Auth/Reducer'
 import { SLICE_NAME as AuthSliceName } from './Auth/Selectors'

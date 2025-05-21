@@ -1,15 +1,16 @@
+import type { FC } from 'react'
+import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import localforage from 'localforage'
-import { Provider } from 'react-redux'
 import {
   FLUSH,
   PAUSE,
   PERSIST,
+  persistReducer,
+  persistStore,
   PURGE,
   REGISTER,
-  REHYDRATE,
-  persistReducer,
-  persistStore
+  REHYDRATE
 } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 
@@ -18,7 +19,6 @@ import reducers, {
   type TReducers
 } from '~/src/Redux/Reducers'
 
-import { FC } from 'react'
 import manifestConfig from '~/manifest.config'
 
 const persistConfig = {

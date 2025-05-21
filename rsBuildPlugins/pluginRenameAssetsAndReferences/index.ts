@@ -1,5 +1,6 @@
 import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core'
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin'
+
 import RenameAssetsAndReferencesRsPackPlugin from './RenameAssetsAndReferencesRsPackPlugin'
 
 export const pluginRenameAssetsAndReferences = (): RsbuildPlugin => ({

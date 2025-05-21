@@ -1,6 +1,6 @@
-import { Stack } from '@mui/material'
-import { FC } from 'react'
+import type { FC } from 'react'
 import { Outlet } from 'react-router'
+import { Stack } from '@mui/material'
 
 const ErrorLayout: FC = () => {
   return (
