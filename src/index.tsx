@@ -22,9 +22,7 @@ if (container) {
     process.env.NODE_ENV === 'production' &&
     process.env.APP_PWA_ENABLE === 'true'
   ) {
-    console.log('sw listener')
     window.addEventListener('load', () => {
-      console.log('sw listener load')
       navigator.serviceWorker
         .register('/sw.js')
         .then(registration => {
